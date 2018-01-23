@@ -1,0 +1,44 @@
+page{
+	width: 100%;
+	height: 100%;
+}
+.page{
+	width: 100%;
+	height: 100%;
+	background: url('https://www.korjo.cn/xcx/yellowPageImg/index_bg.jpg') center center fixed no-repeat ;
+	background-size: cover;
+}
+.btn_click{
+	position: absolute;
+	left: 50%;
+	bottom: 8%;
+	transform: translateX(-50%);
+	padding: 10rpx 25rpx;
+	background: red;
+	text-align: center;
+	width: 25%;
+	border-radius: 10rpx;
+	border:2rpx solid #7f0d27;
+	background: rgba(204,204,204,0.5);
+}
+.logo_box{
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 15%;
+	text-align: center;
+	/*background-color: red; */
+}
+.logo{
+	width: 30%;
+}
+.title{
+	color: #7f0d27;
+	font-size: 60rpx;
+	font-weight: bold;
+	margin: 20rpx 0;
+}
+.slogan{
+	color: #7f0d27;
+	font-size: 50rpx;
+}

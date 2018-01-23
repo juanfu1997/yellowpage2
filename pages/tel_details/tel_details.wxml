@@ -1,0 +1,60 @@
+<view class="page2" hidden="">
+	<view class="top_title">
+		<view class="add_tel">{{tel_details.business_name}}</view>
+	</view>
+	<view class="details_list">
+		<view class="btn_details" data-number="{{tel_details.phone}}" wx:if="{{tel_details.phone}}"  catchtap="take_call">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text" >{{tel_details.phone}}</view>
+		</view>
+		<view class="btn_details" wx:if="{{tel_details.address}}">
+			<image class="details_img" mode="widthFix" src="{{img}}address.png"></image>
+			<view class="details_text">{{tel_details.address}}</view>
+		</view>
+		<view class="btn_details" wx:if="{{tel_details.email}}">
+			<image class="details_img" mode="widthFix" src="{{img}}email.png"></image>
+			<view class="details_text">{{tel_details.email}}</view>
+		</view>
+		<view class="btn_details" wx:if="{{tel_details.customjson}}">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.customjson}}</view>
+		</view>
+		<view class="btn_details" wx:if="{{!tel_details.wxpublic}}" catchtap="followWechat">
+			<image class="details_img" mode="widthFix" src="{{img}}wechat.png"></image>
+			<button open-type="contact" style="height:1.4em;" session-from="{{a}}">
+			<view class="details_text">{{tel_details.wxpublic}}1</view></button>
+		</view>
+		<view class="btn_details" wx:if="{{tel_details.hours}}">
+			<image class="details_img" mode="widthFix" src="{{img}}hours.png"></image>
+			<view class="details_text">{{tel_details.hours}}8:00-12:00</view>
+		</view>
+
+
+		<view class="btn_share">
+			<button class="share" wx:for="{{tool}}" style="line-height:36rpx;" open-type="{{index==0?'share':''}}">
+				<image mode="widthFix" src="{{img}}{{item.img}}" data-index="{{index}}" catchtap="shareError"></image>
+				<view>{{item.txt}}</view>
+			</button>
+			<!-- <veiw class="error">
+				<image></image>
+				<view></view>
+			</veiw> -->
+		</view>
+	</view>
+	<view class="tab_store">
+		<view class="top_tab">
+			<viwe class="{{showTab[0].class}}" data-index="0" wx:if="{{tel_details.intro}}" catchtap="showTab">门店介绍</viwe>
+			<view class="{{showTab[1].class}}" data-index="1" wx:if="{{tel_details.image}}" catchtap="showTab">门店图片</view>
+			<view class="{{showTab[2].class}}" data-index="2" wx:if="{{tel_details.video}}" catchtap="showTab">门店视频</view>
+		</view>
+		<view class="store_details" hidden="{{showTab[0].show}}">{{tel_details.intro}}555555555555555555555555555555555555555555</view>
+		<view class="store_details" hidden="{{showTab[1].show}}">
+			<view class="btn_img">
+				<image class="store_img" mode="widthFix" ></image>
+			</view>
+		</view>
+		<view class="store_details" hidden="{{showTab[2].show}}">
+			<video id="myVideo" src="{{tel_details.video}}" catchtap="playVideo"></video>
+		</view>
+	</view>
+</view>

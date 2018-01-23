@@ -1,0 +1,19 @@
+<view class="page">
+	<view class="ground_switch" style=" background-color: pink;">
+		<view class="btn_logo" >
+			<image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
+		</view>
+		<view class="ground_name">{{current_ground.name}}</view>
+		<view class="ground_list" style=" background-color: pink;">
+					<view class="btn_ground" wx:for="{{ground_list}}" data-index="{{index}}" catchtap="choice_ground">
+						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
+						<view class="ground_name" style=" ">{{item.name}}</view>
+					</view>
+					
+		</view>
+
+
+		
+	</view>
+</view>

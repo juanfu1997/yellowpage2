@@ -1,0 +1,81 @@
+<view class="page page2">
+	<view class="Tips">
+		<text>为提供更近准的服务\n请选择您所在的社群</text>
+	</view>
+	<view class="creatGround" bindtap="creatGround">
+		    <image mode="widthFix" src="{{img}}creatGround.png" />
+		    <view class="btn_creat" >创建社群</view>
+		</view>
+	<view class="choicedGround">
+		<swiper style="width: 100%;height: 100%;" indicator-dots="{{ground.length>=5}}" indicator-active-color="#7a1828" >
+			<swiper-item class="swiper-item">
+				<view wx:for="{{ground}}" wx:if="{{index < 4}}" class="ground" data-index="{{index}}" bindtap="come_ground">
+					<image class="ground_img" mode="widthFix" src="{{korjoImg}}{{item.logo}}" />
+					<view class="ground_name">{{item.name}}</view>
+				</view>
+			</swiper-item>
+			<swiper-item class="swiper-item" >
+				<view wx:for="{{ground}}" wx:if="{{index >= 4}}" class="ground">
+					<image class="ground_img" mode="widthFix" src="{{korjoImg}}{{item.logo}}" />
+					<view class="ground_name">{{item.name}}</view>
+				</view>
+			</swiper-item>
+		</swiper>
+	</view>
+	<view class="detail">
+		<text class="text">为了更精准推送，第一次登入时需要选择您选择社群。\n当您再次登入时会显示您所选社群的内容。\n您也可以随时更换社群查看其他内容。</text>
+	</view>
+
+
+	<view class="btn_info" style="" hidden="{{showCreat}}">
+		<view class="demo" bindtap="close_demo"></view>
+		<view class="info_box" hidden="{{submit_index==1?'':'hidden'}}">
+			<!-- <image class="info_border" mode="widthFix" src="{{img}}creat_border.png"></image> -->
+			<image class="info" mode="widthFix" src="{{img}}creat_info.png"></image>
+			<image class="creat" mode="widthFix" src="{{img}}creat.png" data-index="1" bindtap="creat"></image>
+		</view>
+		<view class="info_box" hidden="{{submit_index==2?'':'hidden'}}">
+			<view class="info_title">创建小黄页</view>
+			<view class="write_box" wx:for="{{write}}" >
+				<view class="write_name">{{item.txt}}：</view>
+				<input class="write_input" data-index="{{index}}" type="{{index==2?'number':'text'}}"  catchblur="bindblur" style="flex-shrink: 1;background: red;" />
+				<!-- <input /> -->
+			</view>
+
+			<view class="foot_tips">
+				<text>请您填写资料\n我们会尽快进行审核\n通过后会给你发送相关信息</text>
+			</view>
+			<view class="submit" bindtap="submit">点击提交</view>
+		</view>
+		<view class="info_box" hidden="{{submit_index==3?'':'hidden'}}">
+			<!-- <image class="info_border" mode="widthFix" src="{{img}}creat_border.png"></image> -->
+			<image class="submit_ok" mode="widthFix" src="{{img}}submit_ok.png"></image>
+			<image class="submit_tips" mode="widthFix" src="{{img}}submit_tips.png"></image>
+			<view class="submit" bindtap="close_submit">好的</view>
+		</view>
+	</view>
+</view>
+<!-- <view class="page btn_info" hidden="1">
+	<view class="demo"></view>
+	<view class="info_box" hidden="{{submit_index==1?'':'hidden'}}">
+		<image class="info" mode="widthFix" src="{{img}}creat_info.png"></image>
+		<image class="creat" mode="widthFix" src="{{img}}creat.png" data-index="1" bindtap="creat"></image>
+	</view>
+	<view class="info_box" hidden="{{submit_index==2?'':'hidden'}}">
+		<view class="info_title">创建小黄页</view>
+		<view class="write_box" wx:for="{{write}}" >
+			<view class="write_name">{{item.txt}}：</view>
+			<input class="write_input" data-index="{{index}}" type="{{index==2?'number':'text'}}"  bindblur="bindblur" style="flex-shrink: 1;background: red;" />
+		</view>
+
+		<view class="foot_tips">
+			<text>请您填写资料\n我们会尽快进行审核\n通过后会给你发送相关信息</text>
+		</view>
+		<view class="submit" bindtap="submit">点击提交</view>
+	</view>
+	<view class="info_box" hidden="{{submit_index==3?'':'hidden'}}">
+		<image class="submit_ok" mode="widthFix" src="{{img}}submit_ok.png"></image>
+		<image class="submit_tips" mode="widthFix" src="{{img}}submit_tips.png"></image>
+		<view class="submit" bindtap="close_submit">好的</view>
+	</view>
+</view> -->

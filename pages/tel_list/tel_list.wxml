@@ -1,0 +1,96 @@
+<view class="page" >
+	<view class="top_title" wx:if="{{class}}">
+		<view class="add_tel">{{topTitle}}</view>
+	</view>
+	<view class="top_class" wx:if="{{!class}}">
+
+		<image style="width: 5%;transform: rotate(180deg);flex-grow: 0;" mode="widthFix" src="{{img}}{{arrow1}}.png"></image>
+	<scroll-view class="scroll_x" scroll-x style="">
+		<view style="width: 100%;height: 100%;text-align: center;line-height: 2.8em;">
+    		<view class="class_name" wx:for="{{class_ground}}" data-type="{{index}}" catchtap="switchType" style="">{{item.yellow_type}}</view>
+   
+		</view>
+  	</scroll-view>
+		<image style="width: 5%;flex-grow: 0;" mode="widthFix" src="{{img}}{{arrow2}}.png"></image>
+	</view>
+	<scroll-view class="tel_list" scroll-y>
+			<view class="btn_tel" wx:for="{{tel_list}}">
+			<image class="call_icon" mode="widthFix" src="{{img}}call.png" data-number="{{item.phone}}" catchtap="take_call"></image>
+			<view class="tel_title" data-page="tel_details" data-index="{{index}}" data-id="{{item.id}}" catchtap="get_details">
+				<view class="tel_name">
+					<view calss="title">{{item.business_name}}</view>
+					<image class="details_icon" mode="widthFix" src="{{img}}arrow2.png"></image>
+				</view>
+				<view class="tel_num">{{item.phone}}</view>
+			</view>
+		</view>
+	</scroll-view>
+
+	<!-- <view class="foot_logo"> -->
+		<!-- <view class="btn_logo"> -->
+
+			<!-- <image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<view class="ground_name">新新家园</view>
+			 -->
+			<view class="ground_switch" style=" background-color: pink;">
+		<view class="btn_logo" >
+			<image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
+		</view>
+		<view class="ground_name" catchtap="showGorundList">{{current_ground.name}}</view>
+		<view class="ground_list" style=" background-color: pink;" hidden="{{showGorundList}}">
+					<view class="btn_ground" wx:for="{{ground_list}}" data-index="{{index}}" catchtap="choice_ground">
+						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
+						<view class="ground_name" style=" ">{{item.name}}</view>
+					</view>
+					
+		</view>
+
+
+		
+	</view>
+		<!-- </view> -->
+	<!-- </view> -->
+</view>
+
+<!-- <view class="page" hidden="{{!details}}">
+	<view class="top_title">
+		<view class="add_tel">{{tel_details.business_name}}</view>
+	</view>
+	<view class="details_list">
+		<view class="btn_details">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.phone}}</view>
+		</view>
+		<view class="btn_details">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.address}}</view>
+		</view>
+		<view class="btn_details">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.email}}</view>
+		</view>
+		<view class="btn_details">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.customjson}}</view>
+		</view>
+		<view class="btn_details">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.wxpublic}}</view>
+		</view>
+		<view class="btn_details">
+			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
+			<view class="details_text">{{tel_details.hours}}</view>
+		</view>
+	</view>
+	<view class="tab_store">
+		<view class="top_tab">
+			<viwe class="tab">门店介绍</viwe>
+			<view class="tab">门店图片</view>
+			<view class="tab">门店视频</view>
+		</view>
+		<view class="store_details">555555555555555555555555555555555555555555</view>
+		<view class="store_details"></view>
+		<view class="store_details"></view>
+	</view>
+</view> -->

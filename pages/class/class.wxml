@@ -1,0 +1,29 @@
+<view class="page flex">
+	<view class="top_title"></view>
+	<view class="class_list">
+		<view class="btn_class" wx:for="{{class_data}}" data-yellow_type="{{item.yellow_type}}" data-parentid="{{item.id}}" bindtap="go_tel_list">
+			<image class="class_img" mode="widthFix" src="{{img}}class_{{index+1}}.png"></image>
+			<view class="class_name">{{item.yellow_type}}</view>
+			<!-- <image class="class_img" mode="widthFix" src="{{korjoImg}}{{item.image}}"></image>
+			<view class="class_name">{{item.yellow_type}}</view> -->
+		</view>
+	</view>
+	<image class="add_tel" mode="widthFix" src="{{img}}add_tel.png" data-page="add_sell" bindtap="addStore"></image>
+	<view class="ground_switch" style=" background-color: pink;">
+		<view class="btn_logo" >
+			<image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
+		</view>
+		<view class="ground_name" catchtap="showGorundList">{{current_ground.name}}</view>
+		<view class="ground_list" style=" background-color: pink;" hidden="{{showGorundList}}">
+					<view class="btn_ground" wx:for="{{ground_list}}" data-index="{{index}}" catchtap="choice_ground">
+						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
+						<view class="ground_name" style=" ">{{item.name}}</view>
+					</view>
+					
+		</view>
+
+
+		
+	</view>
+</view>

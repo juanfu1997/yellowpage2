@@ -1,0 +1,65 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.7.2",
+	"appid": "wxbe0e102b9b2dd161",
+	"projectname": "%E7%94%B5%E8%AF%9D%E5%B0%8F%E9%BB%84%E9%A1%B5%E3%80%90%E9%BB%84%E9%A1%B5%E3%80%91",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "choice",
+					"pathName": "pages/choice_ground/choice_ground",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "class",
+					"pathName": "pages/class/class",
+					"query": "userid=390&parentid=0"
+				},
+				{
+					"id": 2,
+					"name": "sell",
+					"pathName": "pages/add_sell/add_sell",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "tel",
+					"pathName": "pages/tel_list/tel_list",
+					"query": "userid=390&index=17"
+				},
+				{
+					"id": 4,
+					"name": "tel_details",
+					"pathName": "pages/tel_details/tel_details",
+					"query": "typeid=103&index=0"
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/test/test",
+					"query": ""
+				}
+			]
+		}
+	}
+}

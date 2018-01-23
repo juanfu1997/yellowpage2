@@ -1,0 +1,9 @@
+  <view class="page">
+	<view class="logo_box">
+		<image class="logo" mode="widthFix" src="/images/index_logo.png"></image>
+		<view class="title">电话小黄页</view>
+		<view class="slogan">随时随地 轻松查询</view>
+	</view>
+	<view class="btn_click" bindtap="btn_click">点击选择</view>
+	<view></view>
+</view>
