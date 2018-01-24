@@ -56,21 +56,25 @@ Page({
     var index = e.currentTarget.dataset.index
     var tel_details = that.data.tel_details
     var tel_list = that.data.tel_list
+    var typeid = that.data.tel_list[index].typeid
+    // console.log(index)
 
-    tel_details = tel_list[index]
+    wx.navigateTo({
+        url: '/pages/tel_details/tel_details?userid='+that.data.userid+'&typeid='+typeid+'&tel_index='+index
+    })
 
-    if(tel_details.wxpublic){
-      var wechat = ''
+    // tel_details = tel_list[index]
 
-      // tel_details.wxpublic.split(/\//)
-    }
-    var a = 'a/a/a'
-      var b =a.split(/\//)
-      console.log('a.split',b)
-    wx.setStorageSync('tel_details', tel_details)
-    $.goPage(e)
-    that.setData({tel_details,details:true})
-    console.log(tel_details)
+    // if(tel_details.wxpublic){
+    //   var wechat = ''
+    // }
+    // var a = 'a/a/a'
+    //   var b =a.split(/\//)
+    //   console.log('a.split',b)
+    // wx.setStorageSync('tel_details', tel_details)
+    // $.goPage(e)
+    // that.setData({tel_details,details:true})
+    // console.log(tel_details)
   },
   son_ground(e){
     var that =this
@@ -133,12 +137,30 @@ Page({
           }
       })
   },
+  get_class(userid){
+    var that = this
+    var class_data = that.data.class_data
+    var url = 'https://www.korjo.cn/TimeApi/GetYellowUserTypeList'
+    var type = 'GET'
+    var dataJson = {userid:userid,parentid:'0',}
+    $.req(url,type,dataJson,function(res){
+      class_data = res.data
+      that.setData({class_data})
+      console.log(class_data)
+    },)
+  },
   choice_ground(e){
     var that = this
     var ground_list = that.data.ground_list
     var current_ground = that.data.current_ground
     if(e.currentTarget!=undefined){
-    var index = e.currentTarget.dataset.index
+    var ground_index = e.currentTarget.dataset.index
+    var userid = that.data.ground_list[ground_index].userid
+    wx.navigateTo({
+        url: '/pages/class/class?userid='+userid+'&ground_index='+ground_index
+    })
+    // that.get_class(userid)
+
     
   }else{
     var index = e
@@ -160,7 +182,7 @@ Page({
     $.req(url,type,null,function(res){
       ground_list = res.data
       that.setData({ground_list})
-      wx.setStorageSync('ground_list', ground_list)
+      // wx.setStorageSync('ground_list', ground_list)
 
       callback()
 
@@ -175,17 +197,21 @@ Page({
     var that = this
     // var ground_list = wx.getStorageSync('ground_list')
     // that.setData({ground_list})
+      console.log('ground_index',options)
     if(options.userid){
-      that.get_ground_list(390,function(optionsget_class ){
-        that.choice_ground(options.index)
+      that.get_ground_list(options.userid,function(res){
+        that.choice_ground(options.ground_index)
       })
 
       console.log('userid',options)
       that.query(options)
+      that.setData({userid:options.userid})
     }
 
   },
-
+  onHide: function () {
+    this.setData({showGorundList:true})
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -202,9 +228,7 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-  
-  },
+
 
   /**
    * 生命周期函数--监听页面卸载

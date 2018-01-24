@@ -76,7 +76,7 @@ page{
 	text-align: left;
 }
 .btn_class_pd{
-	text-align: left;
+	
 }
 .class_name{
 	padding: 0 10rpx;
@@ -86,7 +86,8 @@ page{
 }
 .class_list1{
 	min-height: 1.4rem;
-	width: 35%;
+	/*width: 35%;*/
+	font-size: 30rpx;
 	position: relative;
 	display: flex;
 	flex-direction: row;
@@ -94,25 +95,20 @@ page{
 	justify-content: space-around;
 	align-items: center;
 }
-.class_list1:after{
-	content: '';
-	position: absolute;
-	right: 0;
-	top: 50%;
-}
+
 .arrow{
 	width: 10%;
 	position: absolute;
 	right: 0;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateX(100%) translateY(-50%);
 }
 .arrowed{
 	width: 10%;
 	position: absolute;
 	right: 0;
 	top: 50%;
-	transform: rotate(180deg) translateY(50%);
+	transform: rotate(180deg) translateX(100%) translateY(50%);
 }
 .btn_add_tel{
 	display: flex;

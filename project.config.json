@@ -21,7 +21,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -33,7 +33,7 @@
 					"id": 1,
 					"name": "class",
 					"pathName": "pages/class/class",
-					"query": "userid=390&parentid=0"
+					"query": "userid=390&ground_index=0"
 				},
 				{
 					"id": 2,
@@ -45,7 +45,7 @@
 					"id": 3,
 					"name": "tel",
 					"pathName": "pages/tel_list/tel_list",
-					"query": "userid=390&index=17"
+					"query": "userid=390&ground_index=0&parentid=8"
 				},
 				{
 					"id": 4,

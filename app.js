@@ -4,6 +4,7 @@ App({
     // img:'http://p.m.fans-me.com/VegaImg/'
     img:'/images/',
     korjoImg:'https://www.korjo.cn',
+    media:'https://www.korjo.cn',
     userInfo:null,
   },
   onLaunch: function () {

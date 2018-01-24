@@ -8,7 +8,9 @@ Page({
   data: {
     img: getApp().globalData.img,
     korjoImg:getApp().globalData.korjoImg,
-    class_list1:['美国', '中国', '巴西', '日本'],
+    media:getApp().globalData.media,
+    // class_list1:['美国', '中国', '巴西', '日本'],
+    class_list1:[],
     class_list2:['美国', '中国', '巴西', '日本'],
     open_time:{open:null,close:null,start:'09:01',end:'12:01'},
     // open_time:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23',],
@@ -29,7 +31,7 @@ Page({
     '分类*：','名称*：', '电话*：', '地址*：', '邮箱：','营业时间：', '介绍：',],
     img_list:[{name:'门店图片：',img:'btn_img'},
               {name:'门店视频：',img:'btn_video'},],
-    list_data:{class1:'',class2:'',name:'',tel:'',address:'',email:'',time:'',introduce:'',},
+    list_data:{yellow_pagesid:'1',typeid:'103', business_name:'',phone:'',address:'',email:'',time:'',intro:'',hours:'',image:'',video:''},
     a:{a:[{p:'p'}]},
     wechat:{name:'',http:''},
     tips:[
@@ -38,6 +40,7 @@ Page({
     ],
     showTips:false,
     blur:0,
+    showSonClass:true,
 
   },
   close_demo(){
@@ -106,9 +109,13 @@ Page({
       if(list_full){
         var url = 'https://www.korjo.cn/TimeApi/SaveBusinessPhoneInfo'
         var type="POST"
-        store_img = JSON.stringify(store_img)
-        store_video = JSON.stringify(store_video)
-        var dataJson = {yellow_pagesid:'1', typeid:'103', business_name:list_data.name, phone:list_data.tel, address:list_data.address, email:list_data.email,intro:list_data.intro, hours:list_data.time, image:store_img, video:store_video}
+        // list_data.image = store_img = JSON.stringify(store_img)
+        // list.data.video = store_video = JSON.stringify(store_video)
+        list_data.image = store_img[0]
+        list_data.video = store_video[0]
+        // var dataJson = {yellow_pagesid:'1', typeid:'103', business_name:list_data.name, phone:list_data.tel, address:list_data.address, email:list_data.email,intro:list_data.intro, hours:list_data.time, image:store_img, video:store_video}
+        var dataJson = list_data
+        console.log(dataJson)
         console.log(dataJson)
         $.req(url,type,dataJson,function(res){
           console.log('submit',res)
@@ -253,6 +260,7 @@ Page({
     var hid_img = that.data.hid_img
     var hid_video = that.data.hid_video
     var img_count = 6 - store_img.length
+    // var list_data = that.data.list_data
     if(type==0){
       wx.chooseImage({
         count: img_count, // 默认9
@@ -261,9 +269,10 @@ Page({
         success: function (res) {
           var tempFilePaths = res.tempFilePaths
           $.each(tempFilePaths,(i,v) => {
+            console.log(v)
             $.adminUpload(v,'image',function(res){
-              console.log(res)
-              store_img.push(res.data)
+              // console.log('http',getApp().globalData.media +res.data)
+              store_img.push(getApp().globalData.korjoImg + res.data)
               if(store_img.length >= 6){
                 hid_img = false
               }
@@ -283,7 +292,9 @@ Page({
               // $.each(res.tempFilePath,(i,v) =>{
                 $.adminUpload(res.tempFilePath,'movie',function(res){
                   // store_video.push(res.data)
+                  console.log('http',getApp().globalData.media+res.data)
                   store_video = res.data
+
                   that.setData({store_video:false,store_video})
                   if(store_video){
 
@@ -328,10 +339,10 @@ Page({
     switch(index)
   {
   case '1':
-    list_data.name = value
+    list_data.business_name = value
     break;
   case '2':
-    list_data.tel = value
+    list_data.phone = value
     if(value){
       // var a = value.match(/\/+/g)
       var b = value.split(/\/+/)
@@ -350,7 +361,7 @@ Page({
   case '6':
     wechat.http = value
     break;
-  case '7':
+  case '8':
     list_data.introduce = value
     break;
   default:
@@ -372,17 +383,113 @@ Page({
     var class_list2 = that.data.class_list2
     var list_data = that.data.list_data
     var type = e.currentTarget.dataset.type
-    console.log(that.data.a.a[0].p)
+    var index1 = that.data.index1
+    var class_data = that.data.class_data
     if(type==1){
-      list_data.class1 = list1_menu = class_list1[index]
+      list1_menu = class_list1[index]
       that.setData({index1:index,list1_menu,list_data})
+        console.log('son',class_data[index].id)
+
+      that.get_sonClass(that.data.userid,class_data[index].id,function(res){
+        if(res.data.length){
+          console.log(res.data)
+          that.setData({showSonClass:false})
+        }else{
+          that.setData({showSonClass:true})
+
+        }
+        // console.log('son',res)
+      })
+      // console.log('class_data[index1]',class_data[index].id,that.data.userid)
+      // that.get_parentClass(that.data.userid,class_data[index].id,function(res){
+      //   // if(res.data){
+      //     console.log(res)
+      //   // }
+      // })
     }else{
-      list_data.class2 =list2_menu = class_list2[index]
+      
+      
+      list2_menu = class_list2[index]
+      // that.get_sonClass(that.data.userid,)
       that.setData({index2:index,list2_menu,list_data})
 
     }
     console.log(e)
   },
+   query(e){
+    var that = this
+    console.log('e',e)
+      var url = 'https://www.korjo.cn/TimeApi/GetYellowUserTypeList'
+      var type = 'GET'
+      var dataJson = {userid:e.userid,parentid:e.yellow_pagesid}
+      var tel_list = that.data.tel_list
+
+      $.req(url,type,dataJson,function(res){
+        if(res.data.length!=0){
+          that.setData({class:false,class_ground:res.data})
+          
+          var idArray = []
+          
+          $.each(that.data.class_ground,(i,v) => {
+            idArray.push(v.id)
+            console.log('idArray',idArray)
+            })
+          that.setData({idArray})
+          that.son_ground(idArray[0])
+          // var tel_dataJson = {typeid:103}
+          // for(var i = 0;i<idArray.length;i++){
+          
+            // console.log('tel_url1111',aa)
+          // }
+
+          }else{
+            var url2 = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
+            var type2 = 'GET'
+            var dataJson2 = {typeid:e.yellow_pagesid}
+            $.req(url2,type2,dataJson2,function(res){
+              // if(){}
+              tel_list = res.data
+              that.setData({tel_list})
+              console.log('get',res)
+            })
+            that.setData({class:true,topTitle:e.yellow_type})
+
+          }
+      })
+  },
+  get_parentClass(userid,parentid,callback){
+    var that = this
+    var class_list1 = that.data.class_list1
+    class_list1 = []
+    var url = 'https://www.korjo.cn/TimeApi/GetYellowUserTypeList'
+    var type = 'GET'
+    var dataJson = {userid:userid,parentid:parentid}
+    $.req(url,type,dataJson,function(res){
+      console.log(res)
+      $.each(res.data,(i,v) => {
+        class_list1.push(v.yellow_type)
+      })
+      that.setData({
+        class_list1,
+        class_data:res.data
+      })
+      callback && callback(res)
+    })
+  },
+  get_sonClass(userid,parentid,callback){
+    var that = this
+    var url = 'https://www.korjo.cn/TimeApi/GetYellowUserTypeList'
+    var type = 'GET'
+    var dataJson = {userid:userid,parentid:parentid}
+    $.req(url,type,dataJson,function(res){
+      console.log('son',res)
+      callback && callback(res)
+    })
+
+    
+  },
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -390,6 +497,15 @@ Page({
   onLoad: function (options) {
   var that = this
   that.videoContext = wx.createVideoContext('myVideo')
+  if(options.yellow_pagesid){
+    console.log(options)
+    that.get_parentClass(options.userid,0)
+    // that.query(options)
+    that.setData({
+      userid:options.userid,
+      yellow_pagesid:options.yellow_pagesid
+    })
+  }
   },
 
   /**

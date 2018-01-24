@@ -41,19 +41,19 @@
 			</veiw> -->
 		</view>
 	</view>
-	<view class="tab_store">
+	<view class="tab_store" wx:if="{{!tab_store}}">
 		<view class="top_tab">
 			<viwe class="{{showTab[0].class}}" data-index="0" wx:if="{{tel_details.intro}}" catchtap="showTab">门店介绍</viwe>
 			<view class="{{showTab[1].class}}" data-index="1" wx:if="{{tel_details.image}}" catchtap="showTab">门店图片</view>
 			<view class="{{showTab[2].class}}" data-index="2" wx:if="{{tel_details.video}}" catchtap="showTab">门店视频</view>
 		</view>
-		<view class="store_details" hidden="{{showTab[0].show}}">{{tel_details.intro}}555555555555555555555555555555555555555555</view>
-		<view class="store_details" hidden="{{showTab[1].show}}">
+		<view class="store_details" hidden="{{showTab[0].show || !tel_details.intro}}">{{tel_details.intro}}555555555555555555555555555555555555555555</view>
+		<view class="store_details" hidden="{{showTab[1].show || !tel_details.image}}">
 			<view class="btn_img">
 				<image class="store_img" mode="widthFix" ></image>
 			</view>
 		</view>
-		<view class="store_details" hidden="{{showTab[2].show}}">
+		<view class="store_details" hidden="{{showTab[2].show || !tel_details.video}}">
 			<video id="myVideo" src="{{tel_details.video}}" catchtap="playVideo"></video>
 		</view>
 	</view>

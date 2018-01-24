@@ -29,7 +29,9 @@ Page({
   
   },
   addStore(e){
-    $.goPage(e)
+    wx.navigateTo({
+      url: '/pages/add_sell/add_sell?yellow_pagesid='+this.data.yellow_pagesid+'&userid='+this.data.userid
+    })
   },
   showGorundList(){
     var that = this 
@@ -45,7 +47,7 @@ Page({
     console.log('userid',userid,parentid)
     // var parentid = that.class_data[index].id
     wx.navigateTo({
-      url: '/pages/tel_list/tel_list?userid='+userid+'&parentid='+parentid+'&yellow_type='+yellow_type+'&index='+that.data.index
+      url: '/pages/tel_list/tel_list?userid='+userid+'&parentid='+parentid+'&yellow_type='+yellow_type+'&ground_index='+that.data.ground_index
     })
 
     console.log(e)
@@ -68,11 +70,14 @@ Page({
     var current_ground = that.data.current_ground
     if(e.currentTarget!=undefined){
     var index = e.currentTarget.dataset.index
+    console.log(index)
+    var userid = that.data.ground_list[index].userid
+    that.get_class(userid)
     
   }else{
     var index = e
-    that.setData({index})
-    console.log(index)
+    that.setData({ground_index:index})
+    console.log(that.data.ground_index)
 
   }
      current_ground = ground_list[index]
@@ -104,9 +109,17 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    if(options.index){
-      that.get_ground_list(390,function(){
-        that.choice_ground(options.index)
+    var yellow_pagesid = that.data.yellow_pagesid
+    var list_data
+    console.log('options',options)
+    if(options.ground_index){
+      that.get_ground_list(options.userid,function(){
+        that.choice_ground(options.ground_index)
+        yellow_pagesid = Number(options.ground_index) +1
+        that.setData({ 
+          yellow_pagesid,
+          userid:options.userid
+        })
       // console.log(options)
       })
       
@@ -114,6 +127,9 @@ Page({
     }
     
    },
+  onHide: function () {
+  this.setData({showGorundList:true})
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -132,14 +148,13 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-  
-  },
-
+ 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    
+
   
   },
 

@@ -193,28 +193,18 @@ function goPage(e) {
 //上传资源获得其链接 资源类型:image audio movie
 function adminUpload(tempUrl, typeOfUpload, callbackWhenSuccess, callbackWhenFail) {
     console.log(typeOfUpload+": "+tempUrl);
-    wx.uploadFile({
-        url: 'https://korjo.fans-me.com/KorjoApi/AdminUpload',
-        filePath: tempUrl,
-        name: 'myPostcardPics',
-        method: 'POST',
-        formData: {
-            'path': 'korjo',
-            'type': typeOfUpload,
-        },
-        header: {
-            'content-type': 'multipart/form-data'
-        },
-        success: function (res) {
-            callbackWhenSuccess(res);
-        },
-        fail: function (res) {
-            callbackWhenFail(res);
-        },
-        complete(res) {
-            console.log(res);
-        }
-    })
+      wx.uploadFile({
+          url: `https://www.korjo.cn/KorjoApi/AdminUpload`,
+          filePath: tempUrl,
+          name: 'file',
+          formData: {
+              path: "korjo",
+              type: typeOfUpload
+          },
+          success: function(res) {
+              callbackWhenSuccess(res);
+          }
+      })
 }
 
 function take_call(number){
@@ -223,7 +213,7 @@ function take_call(number){
     })
   }
 
-function req(url,type,dataJson,callback){
+function req(url,type,dataJson,cb){
     if(type=='POST'){
         dataJson = JSON.stringify(dataJson)
         wx.request({
@@ -237,8 +227,8 @@ function req(url,type,dataJson,callback){
               'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           success: function(res) {
-            if(callback){
-            callback(res)
+            if(cb){
+            cb(res)
             }
             console.log(res.data)
           }
@@ -257,8 +247,8 @@ function req(url,type,dataJson,callback){
               'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           complete: function(res) {
-            if(callback){
-            callback(res)
+            if(cb){
+            cb(res)
             }
             // console.log(res.data)
           }

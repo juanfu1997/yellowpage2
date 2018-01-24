@@ -98,9 +98,9 @@ Page({
   },
   come_ground(e){
     var that = this
-    var index = e.currentTarget.dataset.index
+    var ground_index = e.currentTarget.dataset.index
     wx.reLaunch({
-      url: '/pages/class/class?userid='+that.data.ground[index].userid+'&index='+index
+      url: '/pages/class/class?userid='+that.data.ground[ground_index].userid+'&ground_index='+ground_index
     })
     console.log(e)
   },

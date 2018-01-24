@@ -63,7 +63,7 @@
 }
 .btn_details{
 	width: 80%;
-	height: 2em;
+	/*height: 2em;*/
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -74,6 +74,9 @@
 }
 .details_text{
 	width: 84%;
+	text-overflow: ellipsis;
+  	white-space: nowrap;
+  	overflow: hidden;
 	/*text-align: center;*/
 }
 .tab_store{

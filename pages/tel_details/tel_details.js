@@ -16,6 +16,7 @@ Page({
           {img:'share.png',txt:'分享'},
           {img:'error.png',txt:'报错'},
     ],
+    tab_store:true,
   },
   take_call(e){
     var that = this
@@ -71,11 +72,66 @@ Page({
     that.videoContext.play()
     that.videoContext.requestFullScreen()
   },
+  son_ground(e,callback){
+    var that =this
+    var tel_url = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
+          var tel_type = 'GET'
+    var tel_dataJson = {typeid:e}
+          // var aa =[]
+            $.req(tel_url,tel_type,tel_dataJson,function(res){
+              
+            console.log('dddfff',res,e)
+
+              that.setData({tel_list:res.data})
+              callback()
+            })
+  },
+  IsSonGround(e){
+    var that = this
+    console.log('e',e)
+      var url = 'https://www.korjo.cn/TimeApi/GetYellowUserTypeList'
+      var type = 'GET'
+      var dataJson = {userid:e.userid,parentid:e.parentid}
+      var tel_list = that.data.tel_list
+
+      $.req(url,type,dataJson,function(res){
+        if(res.data.length!=0){
+          that.setData({class:false,class_ground:res.data})
+          
+          var idArray = []
+          
+          $.each(that.data.class_ground,(i,v) => {
+            idArray.push(v.id)
+            console.log('idArray',idArray)
+            })
+          that.setData({idArray})
+          that.son_ground(idArray[0])
+          // var tel_dataJson = {typeid:103}
+          // for(var i = 0;i<idArray.length;i++){
+          
+            // console.log('tel_url1111',aa)
+          // }
+
+          }else{
+            var url2 = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
+            var type2 = 'GET'
+            var dataJson2 = {typeid:e.parentid}
+            $.req(url2,type2,dataJson2,function(res){
+              // if(){}
+              tel_list = res.data
+              that.setData({tel_list})
+              console.log('get',res)
+            })
+            that.setData({class:true,topTitle:e.yellow_type})
+
+          }
+      })
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (options) {    // 参数：分类typeid 选择电话index  
     // var RevSessionCommon={"id": 36,
     //                   "param": {"touser": "",
     //                       "msgtype": "link",
@@ -89,62 +145,77 @@ Page({
     var that = this
     var tel_details = that.data.tel_details
     var showTab = that.data.showTab
-    var get_tel_details = wx.getStorageSync('tel_details')
-    
-    if(get_tel_details){
-      tel_details = get_tel_details
+    var tel_index = options.tel_index
 
-        // var RevSessionCommon = that.data.RevSessionCommon
-
-          // RevSessionCommon.param.link = JSON.stringify(RevSessionCommon.param.link)
-          // RevSessionCommon.param = JSON.stringify(RevSessionCommon.param)
-          // RevSessionCommon = JSON.stringify(RevSessionCommon)
-          // console.log('RevSessionCommon1', RevSessionCommon)
-
-
-          // console.log('RevSessionCommon',RevSessionCommon)
-          // that.setData({RevSessionCommon})
-
-          if(tel_details.wxpublic){
-            that.get_wechat(tel_details.wxpublic)
-          }
-          // if(tel_details.intro||tel_details.image||tel_details.video){
-            if(tel_details.intro){
-              $.each(showTab,(i,v) =>{
-                v.show = true
-                v.class = 'tab_choiced'
-              })
-              showTab[0].show = false
-              showTab[0].class = 'tab'
-            }else if(tel_details.image){
-              $.each(showTab,(i,v) =>{
-                v.show = true
-                v.class = 'tab_choiced'
-              })
-              showTab[1].show = false
-              showTab[1].class = 'tab'
-            }else if(tel_details.video){
-              $.each(showTab,(i,v) =>{
-                v.show = true
-                v.class = 'tab_choiced'
-              })
-              showTab[2].show = false
-              showTab[2].class = 'tab'
-            }
-            // that.setData({showTab})
-          // }
-          that.setData({tel_details,showTab,typeid:options.typeid})
-    }else{
-      var url = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
-      var type = 'GET'
-      var dataJson = {typeid:options.typeid}
-      var index = options.index
-      $.req(url,type,dataJson,(res) =>{
-        tel_details = res.data[index]
+    // var get_tel_details = wx.getStorageSync('tel_details')
+    that.son_ground(options.typeid,function(res){
+      that.setData({tel_details:that.data.tel_list[tel_index]})
+    // console.log('tel_list',that.data.tel_list)
+      if(that.data.tel_list){
+        // tel_details = get_tel_details
+        tel_details = that.data.tel_list[tel_index]
         that.setData({tel_details})
-        console.log('res',tel_details)
-      })
-    }
+
+          // var RevSessionCommon = that.data.RevSessionCommon
+
+            // RevSessionCommon.param.link = JSON.stringify(RevSessionCommon.param.link)
+            // RevSessionCommon.param = JSON.stringify(RevSessionCommon.param)
+            // RevSessionCommon = JSON.stringify(RevSessionCommon)
+            // console.log('RevSessionCommon1', RevSessionCommon)
+
+
+            // console.log('RevSessionCommon',RevSessionCommon)
+            // that.setData({RevSessionCommon})
+
+            if(tel_details.wxpublic){
+              that.get_wechat(tel_details.wxpublic)
+            }
+            // if(tel_details.intro||tel_details.image||tel_details.video){
+              if(tel_details.intro){
+                $.each(showTab,(i,v) =>{
+                  v.show = true
+                  v.class = 'tab_choiced'
+                })
+                showTab[0].show = false
+                showTab[0].class = 'tab'
+              }else if(tel_details.image){
+                $.each(showTab,(i,v) =>{
+                  v.show = true
+                  v.class = 'tab_choiced'
+                })
+                showTab[1].show = false
+                showTab[1].class = 'tab'
+              }else if(tel_details.video){
+                $.each(showTab,(i,v) =>{
+                  v.show = true
+                  v.class = 'tab_choiced'
+                })
+                showTab[2].show = false
+                showTab[2].class = 'tab'
+              }
+            if(!tel_details.intro && !tel_details.image && !tel_details.video){
+              that.setData({tab_store:false})
+            }
+
+              // that.setData({showTab})
+            // }
+            that.setData({tel_details,showTab,typeid:options.typeid})
+      }else{
+        var url = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
+        var type = 'GET'
+        var dataJson = {typeid:options.typeid}
+        var index = options.index
+        $.req(url,type,dataJson,(res) =>{
+          tel_details = res.data[index]
+          that.setData({tel_details})
+          console.log('res',tel_details)
+        })
+      }
+
+    })
+    
+
+    
 
   console.log('11',options)
   },

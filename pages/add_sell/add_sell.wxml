@@ -7,12 +7,16 @@
 		<view style="width: 100%;">
 			<view class="btn_class">
 			<view class="class_name">分类*：</view>
+			<view style="display: flex;justify-content: space-around; width: 100%;align-items: center;">
+
 			<picker mode="selector" class="class_list1" range="{{class_list1}}" value="{{index}}" data-type="1" bindchange="getPickerValue">{{list1_menu}}
 				<image class="{{arrow}}" mode="widthFix" src="{{img}}arrow.png"></image>
 			</picker>
-			<picker mode="selector" class="class_list1" range="{{class_list1}}" value="{{index}}" data-type="2" bindchange="getPickerValue">{{list2_menu}}
+			<picker mode="selector" wx:if="{{!showSonClass}}" class="class_list1" range="{{class_list2}}" value="{{index}}" data-type="2" bindchange="getPickerValue">{{list2_menu}}
 				<image class="{{arrow}}" mode="widthFix" src="{{img}}arrow.png"></image>
 			</picker>
+		</view>
+
 		</view>
 		<view class="btn_class">
 			<view class="class_name">名称*：</view>
@@ -56,7 +60,7 @@
 		</view>
 		<view class="btn_class">
 			<view class="class_name">介绍：</view>
-			<input value=""   bindblur="saveInput"  placeholder="关于你的门店" data-index="7" placeholder-style="font-size:28rpx;" style="max-width: 100%;flex-shrink: 1;text-align: left;" />
+			<input value=""   bindblur="saveInput"  placeholder="关于你的门店" data-index="8" placeholder-style="font-size:28rpx;" style="max-width: 100%;flex-shrink: 1;text-align: left;" />
 		</view>
 		</view>
 	
