@@ -76,9 +76,7 @@ page{
 	width: 10%;
 }
 .ground_name{
-	font-size: 30rpx;
 	color: #5b5757;
-	padding: 0 20rpx;
 }
 .btn_tel{
 	width: 80%;

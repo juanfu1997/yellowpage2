@@ -215,12 +215,13 @@ function take_call(number){
 
 function req(url,type,dataJson,cb){
     if(type=='POST'){
+        console.log('dataJson',dataJson)
+
         dataJson = JSON.stringify(dataJson)
         wx.request({
           url: url, //仅为示例，并非真实的接口地址
           data: {
              dataJson: dataJson ,
-             y: ''
           },
           method:type,
           header: {

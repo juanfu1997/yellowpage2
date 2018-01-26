@@ -30,7 +30,7 @@ Page({
   },
   addStore(e){
     wx.navigateTo({
-      url: '/pages/add_sell/add_sell?yellow_pagesid='+this.data.yellow_pagesid+'&userid='+this.data.userid
+      url: '/pages/add_sell/add_sell?yellow_pagesid='+this.data.yellow_pagesid+'&userid='+this.data.userid+'&ground_index='+this.data.ground_index
     })
   },
   showGorundList(){

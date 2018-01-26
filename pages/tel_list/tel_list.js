@@ -57,10 +57,12 @@ Page({
     var tel_details = that.data.tel_details
     var tel_list = that.data.tel_list
     var typeid = that.data.tel_list[index].typeid
+    var ground_index = that.data.ground_index
+    console.log(ground_index)
     // console.log(index)
 
     wx.navigateTo({
-        url: '/pages/tel_details/tel_details?userid='+that.data.userid+'&typeid='+typeid+'&tel_index='+index
+        url: '/pages/tel_details/tel_details?userid='+that.data.userid+'&typeid='+typeid+'&tel_index='+index+'&ground_index='+ground_index
     })
 
     // tel_details = tel_list[index]
@@ -164,7 +166,7 @@ Page({
     
   }else{
     var index = e
-    that.setData({index})
+    that.setData({index,ground_index:index})
     console.log(index)
 
   }

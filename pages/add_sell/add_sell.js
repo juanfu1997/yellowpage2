@@ -63,10 +63,14 @@ Page({
 
   },
   close_submit(){
+    var that = this
     var submit = this.data.submit
     this.setData({
       submit:false
     })
+    wx.reLaunch({
+            url: '/pages/class/class?userid='+that.data.userid+'&ground_index='+that.data.ground_index
+          })
   },
   submit(){
     var that = this
@@ -82,8 +86,9 @@ Page({
         $.alert('请把公众号及链接补充完整')
       }
       if(wechat.name && wechat.http){
-        list_data.wechat = wechat.name+'!'+wechat.http
-        $.alert(list_data.wechat)
+        list_data.wxpublic = wechat.name+'!'+wechat.http
+        $.alert(list_data.wxpublic)
+        that.setData({list_data})
       }
     }
 
@@ -115,10 +120,10 @@ Page({
         list_data.video = store_video[0]
         // var dataJson = {yellow_pagesid:'1', typeid:'103', business_name:list_data.name, phone:list_data.tel, address:list_data.address, email:list_data.email,intro:list_data.intro, hours:list_data.time, image:store_img, video:store_video}
         var dataJson = list_data
-        console.log(dataJson)
-        console.log(dataJson)
+        console.log('dataJson',dataJson)
         $.req(url,type,dataJson,function(res){
           console.log('submit',res)
+
         })
         that.setData({submit:true,blur:10})
       }else{
@@ -259,7 +264,7 @@ Page({
     var store_video = that.data.store_video
     var hid_img = that.data.hid_img
     var hid_video = that.data.hid_video
-    var img_count = 6 - store_img.length
+    var img_count = 1 - store_img.length
     // var list_data = that.data.list_data
     if(type==0){
       wx.chooseImage({
@@ -272,7 +277,8 @@ Page({
             console.log(v)
             $.adminUpload(v,'image',function(res){
               // console.log('http',getApp().globalData.media +res.data)
-              store_img.push(getApp().globalData.korjoImg + res.data)
+              store_img[0] = res.data
+              // store_img.push(getApp().globalData.korjoImg + res.data) //允许多张照片
               if(store_img.length >= 6){
                 hid_img = false
               }
@@ -385,36 +391,48 @@ Page({
     var type = e.currentTarget.dataset.type
     var index1 = that.data.index1
     var class_data = that.data.class_data
+    var typeid = that.data.typeid
+    var son_ground = that.data.son_ground
     if(type==1){
       list1_menu = class_list1[index]
       that.setData({index1:index,list1_menu,list_data})
-        console.log('son',class_data[index].id)
 
       that.get_sonClass(that.data.userid,class_data[index].id,function(res){
         if(res.data.length){
+          class_list2 = []
           console.log(res.data)
-          that.setData({showSonClass:false})
+          $.each(res.data,(i,v) =>{
+            class_list2.push(v.yellow_type)
+          })
+          that.setData({
+            showSonClass:false,
+            son_ground:res.data,
+            class_list2
+          })
         }else{
-          that.setData({showSonClass:true})
+          typeid = class_data[index].id
+          that.setData({
+            showSonClass:true,
+            typeid
+          })
 
         }
-        // console.log('son',res)
+      // console.log(that.data.typeid,res.data.length)
       })
-      // console.log('class_data[index1]',class_data[index].id,that.data.userid)
-      // that.get_parentClass(that.data.userid,class_data[index].id,function(res){
-      //   // if(res.data){
-      //     console.log(res)
-      //   // }
-      // })
+
     }else{
-      
-      
+      typeid = son_ground[index].id
       list2_menu = class_list2[index]
-      // that.get_sonClass(that.data.userid,)
-      that.setData({index2:index,list2_menu,list_data})
+      // that.get_sonClass(that.data.userid,) 
+      that.setData({
+        index2:index,
+        list2_menu,list_data,
+        class_list2,
+        typeid
+      })
+      console.log(that.data.typeid)
 
     }
-    console.log(e)
   },
    query(e){
     var that = this
@@ -503,7 +521,8 @@ Page({
     // that.query(options)
     that.setData({
       userid:options.userid,
-      yellow_pagesid:options.yellow_pagesid
+      yellow_pagesid:options.yellow_pagesid,
+      ground_index:options.ground_index
     })
   }
   },
