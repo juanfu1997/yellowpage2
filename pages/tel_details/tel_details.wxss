@@ -156,6 +156,8 @@
 	justify-content: flex-start;
 	align-items: flex-end;
 	position: relative;
+	background:rgba(255,255,255,0.4);
+	border-radius: 20rpx;
 	/*height: */
 }
 .ground_list{
@@ -165,6 +167,7 @@
 	transform:translateX(-50%) translateY(-105%);
 	border-radius: 20rpx;
 	padding: 10rpx 10rpx;
+	background:rgba(255,255,255,0.4);
 }
 .btn_logo{
 	position: relative;

@@ -1,5 +1,5 @@
 <view class="page" >
-	<view class="top_title" wx:if="{{class}}">
+	<view class="top_title" style="height: 8%;" wx:if="{{class}}">
 		<view class="add_tel">{{topTitle}}</view>
 	</view>
 	<view class="top_class" wx:if="{{!class}}">
@@ -32,13 +32,13 @@
 			<!-- <image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
 			<view class="ground_name">新新家园</view>
 			 -->
-			<view class="ground_switch" style=" background-color: pink;">
+			<view class="ground_switch" style="height: 5%;">
 		<view class="btn_logo" >
-			<image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<image class="logo" mode="widthFix" src="{{korjoImg}}{{current_ground.logo}}"></image>
 			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
 		</view>
 		<view class="ground_name" catchtap="showGorundList">{{current_ground.name}}</view>
-		<view class="ground_list" style=" background-color: pink;" hidden="{{showGorundList}}">
+		<view class="ground_list" style="" hidden="{{showGorundList}}">
 					<view class="btn_ground" wx:for="{{ground_list}}" data-index="{{index}}" catchtap="choice_ground">
 						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
 						<view class="ground_name" style=" ">{{item.name}}</view>

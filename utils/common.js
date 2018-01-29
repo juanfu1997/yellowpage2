@@ -231,7 +231,7 @@ function req(url,type,dataJson,cb){
             if(cb){
             cb(res)
             }
-            console.log(res.data)
+            console.log(res.data,dataJson)
           }
         })
     }else{

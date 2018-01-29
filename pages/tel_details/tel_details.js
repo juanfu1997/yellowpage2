@@ -29,7 +29,8 @@ Page({
                         "url": "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI4NTc0OTA5NA==&scene=124&from=singlemessage",
                         "thumb_url": "http://p.m.fans-me.com/countdownImg/logo.jpg"
                         }
-                        }
+                        },
+    RevSessionCommon:{id:9}
                         
                             
 
@@ -94,12 +95,15 @@ Page({
 
     
   }else{
-    var index = e
-    that.setData({index,ground_index:index})
-    console.log(index)
+    var ground_index = e
+    that.setData({ground_index})
+    console.log(ground_index)
 
   }
-     current_ground = ground_list[index]
+     current_ground = ground_list[ground_index]
+     wx.setNavigationBarTitle({
+      title: current_ground.name
+    })
 
     that.setData({current_ground,showGorundList:true})
 
@@ -118,7 +122,8 @@ Page({
         }
       })
     }else if(b.length ==1){
-      $.take_call('123')
+      $.take_call(b[0])
+      // console.log('b',b)
 
     }else{
       $.alert('获取号码错误')
@@ -152,7 +157,10 @@ Page({
     if(index == 0){
 
     }else{
-      // baocuo
+      console.log(1)
+      wx.navigateTo({
+        url: '/pages/add_sell/add_sell?userid='+that.data.userid+'&typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&ground_index='+that.data.ground_index+'&id='+that.data.tel_details.id
+      })
     }
   },
   playVideo(){
@@ -269,44 +277,24 @@ Page({
         that.setData({tel_details})
         console.log('tel_details',tel_details)
 
-          var RevSessionCommon = that.data.RevSessionCommon
-          // var RevSessionCommon = Array(200).fill(123).join()
-          // console.log(RevSessionCommon)
-          // var RevSessionCommon ='{\"id\":1,\"param\":\"{\\\"touser\\\":\\\"\\\",\\\"msgtype\\\":\\\"link\\\",\\\"link\\\":\\\"{\\\\\\\"title\\\\\\\":\\\\\\\"第三方名称\\\\\\\",\\\\\\\"description\\\\\\\":\\\\\\\"关注KORJO公众号，接收推送提醒\\\\\\\",\\\\\\\"url\\\\\\\":\\\\\\\"https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI4NTc0OTA5NA==&scene=124&from=singlemessage\\\\\\\",\\\\\\\"thumb_url\\\\\\\":\\\\\\\"http://p.m.fans-me.com/countdownImg/logo.jpg\\\\\\\"}\\\"}\"}' 
-            // RevSessionCommon.param.link = JSON.stringify(RevSessionCommon.param.link)
-            // RevSessionCommon.param = JSON.stringify(RevSessionCommon.param)
-            // RevSessionCommon = JSON.stringify(RevSessionCommon)
-            // console.log('RevSessionCommon1', RevSessionCommon)
-
-
-            console.log('RevSessionCommon',RevSessionCommon)
-            that.setData({RevSessionCommon})
+         
 
             if(tel_details.wxpublic){
               that.get_wechat(tel_details.wxpublic)
             }
               var wx_url = 'https://www.korjo.cn/KorjoApi/SaveDataJsonCommon'
-              // var wx_json = {"param": {"touser": "",
-              //               "msgtype": "link",
-              //               "link": {"title": "第三方名称",
-              //               "description": "关注KORJO公众号，接收推送提醒",
-              //               "url": "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI4NTc0OTA5NA==&scene=124&from=singlemessage",
-              //               "thumb_url": "http://p.m.fans-me.com/countdownImg/logo.jpg"
-              //               }
-              //               }
-              //               }
+            
                 console.log('wx_json',param)
               var param = that.data.param
-                     param.link = JSON.stringify(param.link)
                   param = JSON.stringify(param)
 
                   that.setData({param})
                 console.log('wx_json',param)
               var wx_dataJson = { wxpublic_id:36, datajson:param}
-              $.req(wx_url,'POST',wx_dataJson,function(res){
-                console.log('wx_json',res)
-              })
-            // if(tel_details.intro||tel_details.image||tel_details.video){
+
+              // $.req(wx_url,'POST',wx_dataJson,function(res){
+              //   console.log('wx_json',res,wx_dataJson)
+              // })
               if(tel_details.intro){
                 $.each(showTab,(i,v) =>{
                   v.show = true
@@ -338,6 +326,7 @@ Page({
             that.setData({ 
               tel_details,showTab,
               typeid:options.typeid,
+              ground_index:options.ground_index
 
             })
       }else{
@@ -356,6 +345,7 @@ Page({
       if(options.userid){
       that.get_ground_list(options.userid,function(res){
         that.choice_ground(options.ground_index)
+        that.setData({userid:options.userid})
       })
 
       // console.log('userid',options)
@@ -426,6 +416,7 @@ Page({
       return{
         title:'附近小黄页，电话我知道！',
         path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index,
+        imageUrl:'../../images/business.png',
         success(res){
           console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
         }

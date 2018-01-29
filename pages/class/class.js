@@ -69,18 +69,22 @@ Page({
     var ground_list = that.data.ground_list
     var current_ground = that.data.current_ground
     if(e.currentTarget!=undefined){
-    var index = e.currentTarget.dataset.index
-    console.log(index)
-    var userid = that.data.ground_list[index].userid
+    var ground_index = e.currentTarget.dataset.index
+    console.log(ground_index)
+    var userid = that.data.ground_list[ground_index].userid
     that.get_class(userid)
     
   }else{
-    var index = e
-    that.setData({ground_index:index})
+    var ground_index = e
+    
     console.log(that.data.ground_index)
 
   }
-     current_ground = ground_list[index]
+    that.setData({ground_index})
+     current_ground = ground_list[ground_index]
+     wx.setNavigationBarTitle({
+      title: current_ground.name
+    })
 
 
     that.setData({current_ground,showGorundList:true})
@@ -125,6 +129,7 @@ Page({
       
 
     }
+
     
    },
   onHide: function () {
@@ -176,6 +181,15 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    var that = this
+      return{
+        title:'附近小黄页，电话我知道！',
+        path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index,
+        imageUrl:'../../images/community.png',
+        success(res){
+          console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
+        }
+      }
   
   }
 })

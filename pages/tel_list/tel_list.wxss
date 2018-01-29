@@ -59,9 +59,10 @@ page{
 }
 .tel_list{
 	width: 100%;
-	height: 80%;
+	height:80%;
 	/*min-height: 10%;*/
 	flex-grow: 1;
+	/*-webkit-flex-grow:1;*/
 }
 .foot_logo{
 	width: 80%;
@@ -204,6 +205,8 @@ page{
 	justify-content: flex-start;
 	align-items: flex-end;
 	position: relative;
+	background:rgba(255,255,255,0.4);
+	border-radius: 20rpx;
 	/*height: */
 }
 .btn_logo{
@@ -234,5 +237,5 @@ page{
 	left: 50%;
 	transform:translateX(-50%) translateY(-105%);
 	border-radius: 20rpx;
-	padding: 10rpx 10rpx;
+	padding: 10rpx 10rpx;background:rgba(255,255,255,0.4);
 }

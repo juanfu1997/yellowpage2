@@ -9,13 +9,13 @@
 		</view>
 	</view>
 	<image class="add_tel" mode="widthFix" src="{{img}}add_tel.png" data-page="add_sell" bindtap="addStore"></image>
-	<view class="ground_switch" style=" background-color: pink;">
+	<view class="ground_switch" style=" ">
 		<view class="btn_logo" >
-			<image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<image class="logo" mode="widthFix" src="{{korjoImg}}{{current_ground.logo}}"></image>
 			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
 		</view>
 		<view class="ground_name" catchtap="showGorundList">{{current_ground.name}}</view>
-		<view class="ground_list" style=" background-color: pink;" hidden="{{showGorundList}}">
+		<view class="ground_list" style="" hidden="{{showGorundList}}">
 					<view class="btn_ground" wx:for="{{ground_list}}" data-index="{{index}}" catchtap="choice_ground">
 						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
 						<view class="ground_name" style=" ">{{item.name}}</view>

@@ -21,7 +21,7 @@
 		</view>
 		<view class="btn_details" wx:if="{{tel_details.wxpublic}}" catchtap="followWechat">
 			<image class="details_img" mode="widthFix" src="{{img}}wechat.png"></image>
-			<button open-type="contact" class="wxpublic details_text" session-from="{{RevSessionCommon}}">
+			<button open-type="contact" class="wxpublic details_text" session-from="10">
 			<view class="details_text">{{wechat.name}}</view></button>
 		</view>
 		<view class="btn_details" wx:if="{{tel_details.hours}}">
@@ -31,8 +31,8 @@
 
 
 		<view class="btn_share">
-			<button class="share" wx:for="{{tool}}" style="line-height:36rpx;" open-type="{{index==0?'share':''}}">
-				<image mode="widthFix" src="{{img}}{{item.img}}" data-index="{{index}}" catchtap="shareError"></image>
+			<button class="share" wx:for="{{tool}}" style="line-height:36rpx;" data-index="{{index}}"  open-type="{{index==0?'share':''}}" catchtap="shareError">
+				<image mode="widthFix" src="{{img}}{{item.img}}" data-index="{{index}}" ></image>
 				<view>{{item.txt}}</view>
 			</button>
 			<!-- <veiw class="error">
@@ -66,13 +66,13 @@
 	</view>
 	
 
-	<view class="ground_switch" style=" background-color: pink;" catchtap="showGorundList">
+	<view class="ground_switch" style="" catchtap="showGorundList">
 		<view class="btn_logo" >
-			<image class="logo" mode="widthFix" src="{{img}}ground_logo.png"></image>
+			<image class="logo" mode="widthFix" src="{{korjoImg}}{{current_ground.logo}}"></image>
 			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
 		</view>
 		<view class="ground_name" catchtap="showGorundList">{{current_ground.name}}</view>
-		<view class="ground_list" style=" background-color: pink;" hidden="{{showGorundList}}">
+		<view class="ground_list" style="" hidden="{{showGorundList}}">
 					<view class="btn_ground" wx:for="{{ground_list}}" data-index="{{index}}" catchtap="choice_ground">
 						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
 						<view class="ground_name" style=" ">{{item.name}}</view>

@@ -44,7 +44,7 @@ Page({
         }
       })
     }else if(b.length ==1){
-      $.take_call('123')
+      $.take_call(b[0])
 
     }else{
       $.alert('获取号码错误')
@@ -156,6 +156,7 @@ Page({
     var ground_list = that.data.ground_list
     var current_ground = that.data.current_ground
     if(e.currentTarget!=undefined){
+     console.log('index',1)
     var ground_index = e.currentTarget.dataset.index
     var userid = that.data.ground_list[ground_index].userid
     wx.navigateTo({
@@ -165,12 +166,17 @@ Page({
 
     
   }else{
-    var index = e
-    that.setData({index,ground_index:index})
-    console.log(index)
+    var ground_index = e
+    console.log(ground_index)
+     console.log('index',ground_index)
 
   }
-     current_ground = ground_list[index]
+    that.setData({ground_index:ground_index})
+     console.log('index',ground_index)
+     current_ground = ground_list[ground_index]
+     wx.setNavigationBarTitle({
+      title: current_ground.name
+    })
 
     that.setData({current_ground,showGorundList:true})
 
@@ -199,7 +205,7 @@ Page({
     var that = this
     // var ground_list = wx.getStorageSync('ground_list')
     // that.setData({ground_list})
-      console.log('ground_index',options)
+      console.log('options',options)
     if(options.userid){
       that.get_ground_list(options.userid,function(res){
         that.choice_ground(options.ground_index)

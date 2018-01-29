@@ -17,6 +17,22 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        const code = res.code;
+        wx.request({
+          url: 'https://www.korjo.cn/KorjoApi/GetSessionKey', //仅为示例，并非真实的接口地址
+          data: {
+            id: 36,
+            js_code: code
+          },
+          method:'GET',
+          header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+          },
+          complete: function(res) {
+            // this.globalData.openid = res.data.openid
+            console.log('codecode',res.data)
+          }
+        })
       }
     })
     // 获取用户信息
@@ -39,6 +55,24 @@ App({
         }
       }
     })
+    wx.getSystemInfo({
+      success:function(res){
+        var SDKVersion = parseFloat(res.SDKVersion)
+        if(SDKVersion < 1.5){
+          console.log('banben')
+        wx.showModal({
+          title: '提示',
+          content: '当前版本过低，部分功能无法使用，请升级到最新版本。',
+          success: function(res) {
+          }
+        })
+
+        }
+        
+      }
+    })
+
+
   }
   
 })

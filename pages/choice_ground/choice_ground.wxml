@@ -38,7 +38,7 @@
 			<view class="info_title">创建小黄页</view>
 			<view class="write_box" wx:for="{{write}}" >
 				<view class="write_name">{{item.txt}}：</view>
-				<input class="write_input" data-index="{{index}}" type="{{index==2?'number':'text'}}"  catchblur="bindblur" style="flex-shrink: 1;background: red;" />
+				<input class="write_input" data-index="{{index}}" type="{{index==2?'number':'text'}}"  catchblur="bindblur" style="flex-shrink: 1;" />
 				<!-- <input /> -->
 			</view>
 
@@ -65,7 +65,7 @@
 		<view class="info_title">创建小黄页</view>
 		<view class="write_box" wx:for="{{write}}" >
 			<view class="write_name">{{item.txt}}：</view>
-			<input class="write_input" data-index="{{index}}" type="{{index==2?'number':'text'}}"  bindblur="bindblur" style="flex-shrink: 1;background: red;" />
+			<input class="write_input" data-index="{{index}}" type="{{index==2?'number':'text'}}"  bindblur="bindblur" style="flex-shrink: 1;" />
 		</view>
 
 		<view class="foot_tips">
