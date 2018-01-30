@@ -58,11 +58,12 @@ Page({
     var tel_list = that.data.tel_list
     var typeid = that.data.tel_list[index].typeid
     var ground_index = that.data.ground_index
+    var class_index = that.data.class_index
     console.log(ground_index)
     // console.log(index)
 
     wx.navigateTo({
-        url: '/pages/tel_details/tel_details?userid='+that.data.userid+'&typeid='+typeid+'&tel_index='+index+'&ground_index='+ground_index
+        url: '/pages/tel_details/tel_details?userid='+that.data.userid+'&typeid='+typeid+'&tel_index='+index+'&ground_index='+ground_index+'&class_index='+class_index
     })
 
     // tel_details = tel_list[index]
@@ -155,25 +156,35 @@ Page({
     var that = this
     var ground_list = that.data.ground_list
     var current_ground = that.data.current_ground
+    var ground_index = that.data.ground_index
+    var userid = that.data.userid
     if(e.currentTarget!=undefined){
      console.log('index',1)
-    var ground_index = e.currentTarget.dataset.index
-    var userid = that.data.ground_list[ground_index].userid
+    ground_index = e.currentTarget.dataset.index
+    userid = that.data.ground_list[ground_index].userid
     wx.navigateTo({
         url: '/pages/class/class?userid='+userid+'&ground_index='+ground_index
     })
     // that.get_class(userid)
 
     
-  }else{
-    var ground_index = e
-    console.log(ground_index)
+  }
+  else{
+    ground_index = e
      console.log('index',ground_index)
 
   }
-    that.setData({ground_index:ground_index})
-     console.log('index',ground_index)
+    var groundCookie = userid +'/'+ ground_index
+    console.log('groundCookie',groundCookie)
+    wx.setStorageSync('groundCookie', groundCookie)
+
+    that.setData({
+      ground_index,
+      userid
+    })
      current_ground = ground_list[ground_index]
+     // console.log('index',current_ground,ground_list,ground_index)
+
      wx.setNavigationBarTitle({
       title: current_ground.name
     })
@@ -204,12 +215,13 @@ Page({
   onLoad: function (options) {
     var that = this
     // var ground_list = wx.getStorageSync('ground_list')
-    // that.setData({ground_list})
+    that.setData({userid:options.userid})
       console.log('options',options)
     if(options.userid){
       that.get_ground_list(options.userid,function(res){
         that.choice_ground(options.ground_index)
       })
+      that.setData({class_index:options.class_index})
 
       console.log('userid',options)
       that.query(options)

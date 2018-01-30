@@ -19,7 +19,7 @@
 			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
 			<view class="details_text">{{tel_details.customjson}}</view>
 		</view>
-		<view class="btn_details" wx:if="{{tel_details.wxpublic}}" catchtap="followWechat">
+		<view class="btn_details" wx:if="{{!tel_details.wxpublic}}" catchtap="followWechat">
 			<image class="details_img" mode="widthFix" src="{{img}}wechat.png"></image>
 			<button open-type="contact" class="wxpublic details_text" session-from="10">
 			<view class="details_text">{{wechat.name}}</view></button>
@@ -56,7 +56,7 @@
 		</view>
 		<view class="store_details" hidden="{{showTab[1].show || !tel_details.image}}">
 			<view class="btn_img">
-				<image class="store_img" style="" mode="widthFix" src="{{korjoImg}}{{tel_details.image}}" catchtap="preview"></image>
+				<image class="store_img" style="" mode="widthFix" src="{{korjoImg}}{{item}}" wx:for="{{store_img}}" catchtap="preview"></image>
 			</view>
 		</view>
 		<view class="store_details" hidden="{{showTab[2].show || !tel_details.video}}">

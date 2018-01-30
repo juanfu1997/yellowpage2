@@ -85,8 +85,10 @@ Page({
     var that = this
     var ground_list = that.data.ground_list
     var current_ground = that.data.current_ground
+    var ground_index = that.data.ground_index
+    var userid = that.data.userid
     if(e.currentTarget!=undefined){
-    var ground_index = e.currentTarget.dataset.index
+    ground_index = e.currentTarget.dataset.index
     var userid = that.data.ground_list[ground_index].userid
     wx.navigateTo({
         url: '/pages/class/class?userid='+userid+'&ground_index='+ground_index
@@ -95,12 +97,20 @@ Page({
 
     
   }else{
-    var ground_index = e
-    that.setData({ground_index})
+    ground_index = e
     console.log(ground_index)
 
   }
+      var groundCookie = userid +'/'+ ground_index
+      console.log('groundCookie',groundCookie)
+      wx.setStorageSync('groundCookie', groundCookie)
+
+      that.setData({
+        ground_index,
+        userid
+      })
      current_ground = ground_list[ground_index]
+     console.log('current_ground',that.data.ground_list)
      wx.setNavigationBarTitle({
       title: current_ground.name
     })
@@ -159,7 +169,7 @@ Page({
     }else{
       console.log(1)
       wx.navigateTo({
-        url: '/pages/add_sell/add_sell?userid='+that.data.userid+'&typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&ground_index='+that.data.ground_index+'&id='+that.data.tel_details.id
+        url: '/pages/add_sell/add_sell?userid='+that.data.userid+'&typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&ground_index='+that.data.ground_index+'&id='+that.data.tel_details.id+'&class_index='+that.data.class_index
       })
     }
   },
@@ -261,11 +271,17 @@ Page({
     var tel_details = that.data.tel_details
     var showTab = that.data.showTab
     var wxpublic_http = that.data.tel_details.wxpublic
+    var userid = that.data.userid
+    that.setData({userid:options.userid})
     console.log('options',options)
 
     that.son_ground(options.typeid,function(res){
     var tel_index = options.tel_index
-      that.setData({tel_index:options.tel_index})
+    var class_index = options.class_index
+      that.setData({
+        tel_index:options.tel_index,
+        class_index
+      })
 
     
 
@@ -309,6 +325,10 @@ Page({
                 })
                 showTab[1].show = false
                 showTab[1].class = 'tab'
+
+                var store_img = JSON.parse(tel_details.image)
+                that.setData({ store_img })
+                console.log('tel_details.image',tel_details.image)
               }else if(tel_details.video){
                 $.each(showTab,(i,v) =>{
                   v.show = true

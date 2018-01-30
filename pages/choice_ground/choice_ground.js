@@ -8,14 +8,14 @@ Page({
   data: {
   	img: getApp().globalData.img,
     korjoImg:getApp().globalData.korjoImg,
-  	ground:[
-  			{logo:'calender.png',name:'小伙伴1'},
-  			{logo:'calender.png',name:'小伙伴2'},
-  			// {logo:'calender.png',name:'小伙伴3'},
-  			// {logo:'calender.png',name:'小伙伴4'},
-  			// {logo:'calender.png',name:'小伙伴5'},
-  			],
-    // ground:[],
+  	// ground:[
+  	// 		// {logo:'calender.png',name:'小伙伴1'},
+  	// 		// {logo:'calender.png',name:'小伙伴2'},
+  	// 		// // {logo:'calender.png',name:'小伙伴3'},
+  	// 		// // {logo:'calender.png',name:'小伙伴4'},
+  	// 		// // {logo:'calender.png',name:'小伙伴5'},
+  	// 		],
+    ground:[],
     write:[
             {txt:'社区名称',content:''},
             {txt:'联系人',content:''},
@@ -29,9 +29,7 @@ Page({
     submit_index:1,
   
   },
-  // write_input(e){
-  //   console.log(e)
-  // },
+
   close_submit(){
     var that = this
     that.setData({
@@ -99,10 +97,12 @@ Page({
   come_ground(e){
     var that = this
     var ground_index = e.currentTarget.dataset.index
+    var groundCookie = that.data.ground[ground_index].userid +'/'+ ground_index
+    wx.setStorageSync('groundCookie', groundCookie)
+    console.log(groundCookie)
     wx.reLaunch({
       url: '/pages/class/class?userid='+that.data.ground[ground_index].userid+'&ground_index='+ground_index
     })
-    console.log(e)
   },
   getAllGround(){
     var that = this

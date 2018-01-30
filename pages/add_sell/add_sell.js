@@ -11,7 +11,9 @@ Page({
     media:getApp().globalData.media,
     // class_list1:['美国', '中国', '巴西', '日本'],
     class_list1:[],
-    class_list2:['美国', '中国', '巴西', '日本'],
+    // class_list2:['美国', '中国', '巴西', '日本'],
+    class_list2:[],
+
     open_time:{open:null,close:null,start:'09:01',end:'12:01'},
     // open_time:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23',],
     store_img:[],
@@ -41,6 +43,8 @@ Page({
     showTips:false,
     blur:0,
     showSonClass:true,
+    textarea:'请介绍你的门店',
+    showTextarea:false,
 
   },
   close_demo(){
@@ -58,7 +62,8 @@ Page({
     var blur = that.data.blur
     that.setData({
       showTips:true,
-      blur:10
+      blur:10,
+      showTextarea:false
     })
 
   },
@@ -82,6 +87,7 @@ Page({
 
     list_data.yellow_pagesid = that.data.yellow_pagesid
     list_data.typeid = that.data.typeid
+    console.log('1a1',list_data.typeid,that.data.yellow_pagesid)
 
     if(wechat.name || wechat.http){
       
@@ -109,7 +115,7 @@ Page({
           if(i=='yellow_pagesid'||i=='typeid'||i=='business_name'||i=='phone'||i=='address'){
             if(!v){
                 list_full =false
-                // console.log('1',i,v)
+                console.log('1',i,v)
                 return;
               }
           }
@@ -119,13 +125,19 @@ Page({
         var type="POST"
         // list_data.image = store_img = JSON.stringify(store_img)
         // list.data.video = store_video = JSON.stringify(store_video)
-        list_data.image = store_img[0]
+        // var img_json = ''
+        // $.each(store_img,(i,v) => {
+        //   img_json = v
+        // })
+        store_img = JSON.stringify(store_img)
+        list_data.image = store_img
         list_data.video = store_video[0]
         list_data.id = that.data.id
+        // list_data.yellow_pagesid = 2
         // list_data.yellow_pagesid = that.data.yellow_pagesid
         // var dataJson = {yellow_pagesid:'1', typeid:'103', business_name:list_data.name, phone:list_data.tel, address:list_data.address, email:list_data.email,intro:list_data.intro, hours:list_data.time, image:store_img, video:store_video}
         var dataJson = list_data
-        console.log('dataJson',dataJson)
+        console.log('dataJson',list_data.image)
         $.req(url,type,dataJson,function(res){
           console.log('submit',res)
 
@@ -253,7 +265,8 @@ Page({
   },
   viewVideo(){
     var that = this
-    that.videoContext.play()
+    console.log('play')
+    // that.videoContext.play()
     that.videoContext.requestFullScreen()
 
   },
@@ -269,7 +282,7 @@ Page({
     var store_video = that.data.store_video
     var hid_img = that.data.hid_img
     var hid_video = that.data.hid_video
-    var img_count = 1 - store_img.length
+    var img_count = 2 - store_img.length
     // var list_data = that.data.list_data
     if(type==0){
       wx.chooseImage({
@@ -282,8 +295,8 @@ Page({
             console.log(v)
             $.adminUpload(v,'image',function(res){
               // console.log('http',getApp().globalData.media +res.data)
-              store_img[0] = res.data
-              // store_img.push(getApp().globalData.korjoImg + res.data) //允许多张照片
+              // store_img[0] = res.data
+              store_img.push(res.data) //允许多张照片
               if(store_img.length >= 6){
                 hid_img = false
               }
@@ -372,8 +385,25 @@ Page({
   case '6':
     wechat.http = value
     break;
+  case '7':
+    list_data.hours = value
+    break;
   case '8':
-    list_data.introduce = value
+    var textarea = that.data.textarea
+    var showTextarea = that.data.showTextarea
+    list_data.intro = value
+    textarea = list_data.intro
+    console.log(textarea,value,e)
+      showTextarea = !showTextarea
+    if(!textarea.length){
+      textarea='请介绍你的门店'
+      // showTextarea = false
+    }
+    that.setData({
+      textarea,
+      showTextarea,
+      focus:false
+    })
     break;
   default:
   console.log('商家资料获取错误',index)
@@ -382,6 +412,15 @@ Page({
   
   that.setData({ list_data,wechat })
     console.log(e,list_data)
+  },
+  saveTextarea(e){
+    var that = this
+    var value = e.currentTarget.dataset.value
+    var showTextarea = that.data.showTextarea
+    that.setData({ 
+      showTextarea:!showTextarea,
+      focus:true
+       })
   },
     
 
@@ -514,7 +553,7 @@ Page({
    get_wechat(e){
     var that = this
     var tel_details = that.data.tel_details
-    var wechat = {name:'',http:''}
+    var wechat = {name:'',http:''} 
     wechat.http = e.replace(/.*?!/,'')
     wechat.name = e.split(/!/)
     wechat.name = wechat.name[0]
@@ -529,41 +568,108 @@ Page({
   onLoad: function (options) {
     var that = this
     var list_data = that.data.list_data
-    that.get_parentClass(options.userid,0)
+    var class_index = options.class_index
+    var tel_index = that.data.tel_index
+    var list1_menu = that.data.list1_menu
+    var list2_menu = that.data.list2_menu
+    var showSonClass = that.data.showSonClass
+    var class_list1 = that.data.class_list1
     console.log('options',options)
     that.setData({
-        userid:options.userid,
-        yellow_pagesid:options.yellow_pagesid,
-        ground_index:options.ground_index
+        userid : options.userid,
+        yellow_pagesid : options.yellow_pagesid,
+        ground_index : options.ground_index,
+        class_index : options.class_index
       })
     that.videoContext = wx.createVideoContext('myVideo')
     if(!options.id){
-      console.log('options')
+      that.get_parentClass(options.userid,0,function(res){})
       // that.query(options)
       that.setData({
-        showAdd:false
+        showAdd:false,
+        top_title:'添加商家电话'
       })
     }else{
-      var yellow_pagesid = Number(options.ground_index)+1
-      that.setData({yellow_pagesid})
-      var url = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
-      var type = 'GET'
-      var dataJson = {typeid:options.typeid}
-      $.req(url,type,dataJson,function(res){
-        var id = res.data[options.tel_index].id
-        var typeid = options.typeid
-
-        list_data = res.data[options.tel_index]
-        if(list_data.wxpublic){
-          that.get_wechat(list_data.wxpublic)
-        }
-        that.setData({
-          list_data,
-          id:options.id,
-          showAdd:true
-        })
-        console.log(res.data[options.tel_index].id)
+      that.get_parentClass(options.userid,0,function(res){
+      console.log('data',res.data)
+      // $.each(res.data,(i,v) => {
+      // class_list1.push(v.yellow_type)
+      // })
+      // that.setData({class_list1})
+      list1_menu = res.data[class_index].yellow_type
+      console.log(list1_menu)
+      showSonClass = true
+      that.get_sonClass(options.userid,res.data[class_index].id,function(res){
+          // var url = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
+          // var type = 'GET'
+          // var dataJson = {typeid:options.typeid}
+          var class_list2 = that.data.class_list2
+          class_list2=[]
+          $.each(res.data,(i,v) => {
+            class_list2.push(v.yellow_type)
+          })
+          that.setData({
+            class_list2
+          })         
+          if(res.data.length!=0){
+            console.log('test',res.data)
+            $.each(res.data,(i,v) =>{
+              if(v.id == options.typeid){
+              list2_menu = res.data[i].yellow_type
+              console.log('testok',v)
+              }
+              console.log('test',v)
+            })
+            // $.req(url,type,dataJson,function(res){
+              showSonClass = false
+            // })
+            that.setData({
+              list2_menu,
+              showSonClass,
+            })
+          }
+          console.log('111',res.data)
       })
+      
+          that.setData({
+              list1_menu,
+            })
+        })
+          var yellow_pagesid = Number(options.ground_index)+1
+          var typeid = options.typeid
+          // list_data.yellow_pagesid = yellow_pagesid
+          // list_data.typeid = options.typeid
+          // console.log('typeid',options.typeid)
+          that.setData({
+            yellow_pagesid,
+            typeid
+          })
+          var url = 'https://www.korjo.cn/TimeApi/GetBusinessPhoneListByID'
+          var type = 'GET'
+          var dataJson = {typeid:options.typeid}
+          var store_img = that.data.store_img
+
+          $.req(url,type,dataJson,function(res){
+            var id = res.data[options.tel_index].id
+            var typeid = options.typeid
+
+            list_data = res.data[options.tel_index]
+            if(list_data.wxpublic){
+              that.get_wechat(list_data.wxpublic)
+            }
+            if(list_data.image){
+              store_img = JSON.parse(list_data.image)
+              console.log(store_img)
+            }
+            that.setData({
+              list_data,
+              id:options.id,
+              showAdd:true,
+              top_title:'信息报错',
+              store_img
+            })
+            console.log(res.data[options.tel_index].id)
+          })
 
     }
 

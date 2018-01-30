@@ -30,7 +30,7 @@ Page({
   },
   addStore(e){
     wx.navigateTo({
-      url: '/pages/add_sell/add_sell?yellow_pagesid='+this.data.yellow_pagesid+'&userid='+this.data.userid+'&ground_index='+this.data.ground_index
+      url: '/pages/add_sell/add_sell?yellow_pagesid='+this.data.current_ground.id+'&userid='+this.data.current_ground.userid+'&ground_index='+this.data.ground_index
     })
   },
   showGorundList(){
@@ -44,10 +44,11 @@ Page({
     var parentid = e.currentTarget.dataset.parentid
     var userid = that.data.current_ground.userid
     var yellow_type = e.currentTarget.dataset.yellow_type
-    console.log('userid',userid,parentid)
+    var class_index = e.currentTarget.dataset.index
+    console.log('indexindex',e.currentTarget.dataset.index)
     // var parentid = that.class_data[index].id
     wx.navigateTo({
-      url: '/pages/tel_list/tel_list?userid='+userid+'&parentid='+parentid+'&yellow_type='+yellow_type+'&ground_index='+that.data.ground_index
+      url: '/pages/tel_list/tel_list?userid='+userid+'&parentid='+parentid+'&yellow_type='+yellow_type+'&ground_index='+that.data.ground_index+'&class_index='+class_index
     })
 
     console.log(e)
@@ -68,19 +69,27 @@ Page({
     var that = this
     var ground_list = that.data.ground_list
     var current_ground = that.data.current_ground
+    var ground_index = that.data.ground_index
+    var userid = that.data.userid
     if(e.currentTarget!=undefined){
-    var ground_index = e.currentTarget.dataset.index
+    ground_index = e.currentTarget.dataset.index
     console.log(ground_index)
-    var userid = that.data.ground_list[ground_index].userid
+    userid = that.data.ground_list[ground_index].userid
     that.get_class(userid)
     
-  }else{
-    var ground_index = e
-    
+  }
+  else{
+    ground_index = e
     console.log(that.data.ground_index)
 
   }
-    that.setData({ground_index})
+    var groundCookie = userid +'/'+ ground_index
+    // console.log(groundCookie)
+    wx.setStorageSync('groundCookie', groundCookie)
+    that.setData({
+      ground_index,
+      userid
+    })
      current_ground = ground_list[ground_index]
      wx.setNavigationBarTitle({
       title: current_ground.name
@@ -115,6 +124,9 @@ Page({
     var that = this
     var yellow_pagesid = that.data.yellow_pagesid
     var list_data
+    that.setData({
+      userid:options.userid
+    })
     console.log('options',options)
     if(options.ground_index){
       that.get_ground_list(options.userid,function(){
