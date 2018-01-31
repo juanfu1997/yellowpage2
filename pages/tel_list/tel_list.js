@@ -12,14 +12,20 @@ Page({
     topTitle:'',
     details:false,
     class_ground:[
-                  {yellow_type:'1',userid:'390',parentid:'17',id:'103',image:'',data:''},
+                  {yellow_type:'',userid:'',parentid:'',id:'',image:'',data:''},
     ],
-    tel_list:[{"typeid":103,"business_name":"真功夫","phone":"400-692-7927","address":"","email":"","intro":"","hours":"","image":"","video":"","yellow_type":null,"wxpublic":"","customjson":"","id":51,"sort":0,"status":0,"addtime":"2018-01-18T14:31:37"},],
-    tel_details:[{"typeid":103,"business_name":"吉野家","phone":"400-819-7197","address":"","email":"","intro":"","hours":"","image":"","video":"","yellow_type":null,"wxpublic":"","customjson":"","id":50,"sort":0,"status":0,"addtime":"2018-01-18T14:30:15"},],
+    tel_list:[{"typeid":'',"business_name":"","phone":"","address":"","email":"","intro":"","hours":"","image":"","video":"","yellow_type":'',"wxpublic":"","customjson":"","id":'',"sort":0,"status":0,"addtime":"2018-01-18T14:31:37"},],
+    tel_details:[{"typeid":'',"business_name":"","phone":"","address":"","email":"","intro":"","hours":"","image":"","video":"","yellow_type":'',"wxpublic":"","customjson":"","id":'',"sort":0,"status":0,"addtime":"2018-01-18T14:30:15"},],
     son_ground:[],
     arrow1:'arrow2',
     arrow2:'arrow2',
     showGorundList:true,
+    bgimage:'',
+    son_class:[
+                {class:'class_named'},
+                {class:'class_name'},
+                {class:'class_name'},
+    ],
 
     
 
@@ -96,6 +102,11 @@ Page({
     var type = e.currentTarget.dataset.type
     var tel_list = that.data.tel_list
     var idArray = that.data.idArray
+    var choice_son = that.data.choice_son
+    choice_son = type
+    that.setData({
+      choice_son,
+    })
     console.log(idArray)
     that.son_ground(idArray[type])
   },
@@ -162,7 +173,7 @@ Page({
      console.log('index',1)
     ground_index = e.currentTarget.dataset.index
     userid = that.data.ground_list[ground_index].userid
-    wx.navigateTo({
+    wx.reLaunch({
         url: '/pages/class/class?userid='+userid+'&ground_index='+ground_index
     })
     // that.get_class(userid)
@@ -215,7 +226,13 @@ Page({
   onLoad: function (options) {
     var that = this
     // var ground_list = wx.getStorageSync('ground_list')
-    that.setData({userid:options.userid})
+    var bgimage = that.data.bgimage
+    bgimage = wx.getStorageSync('bgimage')
+    // console.log('bgimage',bgimage)
+    that.setData({
+      userid:options.userid,
+      bgimage
+    })
       console.log('options',options)
     if(options.userid){
       that.get_ground_list(options.userid,function(res){

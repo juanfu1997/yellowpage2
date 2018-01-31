@@ -26,6 +26,7 @@ Page({
     ],
     ground_list:[],
     showGorundList:true,
+    bgimage:''
   
   },
   addStore(e){
@@ -71,12 +72,15 @@ Page({
     var current_ground = that.data.current_ground
     var ground_index = that.data.ground_index
     var userid = that.data.userid
+    
     if(e.currentTarget!=undefined){
     ground_index = e.currentTarget.dataset.index
     console.log(ground_index)
     userid = that.data.ground_list[ground_index].userid
     that.get_class(userid)
-    
+    wx.reLaunch({
+        url: '/pages/class/class?userid='+userid+'&ground_index='+ground_index
+    })
   }
   else{
     ground_index = e
@@ -124,6 +128,8 @@ Page({
     var that = this
     var yellow_pagesid = that.data.yellow_pagesid
     var list_data
+    var current_ground = that.data.current_ground
+    var bgimage = that.data.bgimage
     that.setData({
       userid:options.userid
     })
@@ -131,10 +137,19 @@ Page({
     if(options.ground_index){
       that.get_ground_list(options.userid,function(){
         that.choice_ground(options.ground_index)
+          console.log('bgimage1',that.data.current_ground.bgimage)
+        if(that.data.current_ground.bgimage){
+          bgimage = that.data.current_ground.bgimage
+        }else{
+          bgimage = '/Upload//Korjo/Image/Images/20180131123835_tesTmY.jpg'
+        }
+          wx.setStorageSync('bgimage', bgimage)
+          // console.log('bgimage',bgimage)
         yellow_pagesid = Number(options.ground_index) +1
         that.setData({ 
           yellow_pagesid,
-          userid:options.userid
+          userid:options.userid,
+          bgimage
         })
       // console.log(options)
       })
@@ -146,6 +161,18 @@ Page({
    },
   onHide: function () {
   this.setData({showGorundList:true})
+  },
+  onShareAppMessage: function () {
+    var that = this
+      return{
+        title:`${that.data.current_ground.name}小黄页，再也不担心记不起附近的商家电话惹。`,
+        path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index,
+        imageUrl:'../../images/community.png',
+        success(res){
+          console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
+        }
+      }
+  
   },
 
   /**
@@ -192,16 +219,5 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-    var that = this
-      return{
-        title:'附近小黄页，电话我知道！',
-        path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index,
-        imageUrl:'../../images/community.png',
-        success(res){
-          console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
-        }
-      }
   
-  }
 })

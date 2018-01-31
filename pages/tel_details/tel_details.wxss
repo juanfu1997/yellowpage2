@@ -1,12 +1,13 @@
 .page2{
 	width: 100%;
 	min-height: 100%;
-	background: url('https://www.korjo.cn/xcx/yellowPageImg/bg.jpg') center center fixed no-repeat;
+	/*background: url('https://www.korjo.cn/xcx/yellowPageImg/bg.jpg') center center fixed no-repeat;*/
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	position: relative;
 }
 .add_tel{
 	position: absolute;
@@ -143,7 +144,7 @@
 }
 .store_img{
 	margin: 20rpx auto; 
-	width: 100%;
+	width: 30%;
 }
 
 .ground_switch{

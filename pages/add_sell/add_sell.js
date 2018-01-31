@@ -28,11 +28,11 @@ Page({
     sell_name:'',
     list1_menu:'请选择分类',
     list2_menu:'请选择分类',
-    arrow:'arrow',
+    arrow:{parent:'arrow',child:'arrow'},
     add_list:[
     '分类*：','名称*：', '电话*：', '地址*：', '邮箱：','营业时间：', '介绍：',],
-    img_list:[{name:'门店图片：',img:'btn_img'},
-              {name:'门店视频：',img:'btn_video'},],
+    img_list:[{name:'门店图片：',img:'addicon'},
+              {name:'门店视频：',img:'addicon'},],
     list_data:{yellow_pagesid:'',typeid:'',id:'', business_name:'',phone:'',address:'',email:'',time:'',intro:'',hours:'',image:'',video:''},
     a:{a:[{p:'p'}]},
     wechat:{name:'',http:''},
@@ -123,13 +123,14 @@ Page({
       if(list_full){
         var url = 'https://www.korjo.cn/TimeApi/SaveBusinessPhoneInfo'
         var type="POST"
-        // list_data.image = store_img = JSON.stringify(store_img)
+        list_data.image = store_img 
         // list.data.video = store_video = JSON.stringify(store_video)
         // var img_json = ''
-        // $.each(store_img,(i,v) => {
-        //   img_json = v
+        // $.each(list_data.image,(i,v) => {
+          
         // })
         store_img = JSON.stringify(store_img)
+        console.log(store_img)
         list_data.image = store_img
         list_data.video = store_video[0]
         list_data.id = that.data.id
@@ -265,15 +266,19 @@ Page({
   },
   viewVideo(){
     var that = this
-    console.log('play')
-    // that.videoContext.play()
+    // console.log('play')
+    that.videoContext.play()
     that.videoContext.requestFullScreen()
+
 
   },
   fullscreen(e){
     var that = this
-    var type = event.detail
-    console.log(e)
+    var direction = e.detail.direction
+    if(direction='horizontal'){
+      that.videoContext.pause()
+    }
+    // console.log(e)
   },
   uploadMedia(e){
     var that = this 
@@ -282,7 +287,7 @@ Page({
     var store_video = that.data.store_video
     var hid_img = that.data.hid_img
     var hid_video = that.data.hid_video
-    var img_count = 2 - store_img.length
+    var img_count = 3 - store_img.length
     // var list_data = that.data.list_data
     if(type==0){
       wx.chooseImage({
@@ -297,7 +302,7 @@ Page({
               // console.log('http',getApp().globalData.media +res.data)
               // store_img[0] = res.data
               store_img.push(res.data) //允许多张照片
-              if(store_img.length >= 6){
+              if(store_img.length >= 3){
                 hid_img = false
               }
               that.setData({store_img,hid_img})
@@ -439,8 +444,11 @@ Page({
     var son_ground = that.data.son_ground
     if(type==1){
       list1_menu = class_list1[index]
-      that.setData({index1:index,list1_menu,list_data})
-      console.log(class_data)
+      that.setData({
+        index1:index,list1_menu,
+        list_data,
+      })
+      // console.log(class_data)
       that.get_sonClass(that.data.userid,class_data[index].id,function(res){
         if(res.data.length){
           class_list2 = []
@@ -574,12 +582,16 @@ Page({
     var list2_menu = that.data.list2_menu
     var showSonClass = that.data.showSonClass
     var class_list1 = that.data.class_list1
+    var bgimage = that.data.bgimage
+    bgimage = wx.getStorageSync('bgimage')
+    // console.log('bgimage',bgimage)
     console.log('options',options)
     that.setData({
         userid : options.userid,
         yellow_pagesid : options.yellow_pagesid,
         ground_index : options.ground_index,
-        class_index : options.class_index
+        class_index : options.class_index,
+        bgimage
       })
     that.videoContext = wx.createVideoContext('myVideo')
     if(!options.id){

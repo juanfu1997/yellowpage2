@@ -29,7 +29,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var groundCookie = wx.getStorageSync('groundCookie')
+
+    if(groundCookie){
+      var cookie = groundCookie.split('/')
+      console.log('cookie',cookie)
+      var userid = cookie[0]
+      var ground_index = cookie[1]
+      wx.reLaunch({
+        url: '/pages/class/class?userid='+ userid +'&ground_index='+ ground_index
+      })
+    }
   },
 
   /**

@@ -240,7 +240,8 @@ function req(url,type,dataJson,cb){
           data: {
              userid: dataJson.userid ,
              parentid: dataJson.parentid,
-             typeid:dataJson.typeid
+             typeid:dataJson.typeid,
+             // business_id:dataJson.business_id
 
           },
           method:type,

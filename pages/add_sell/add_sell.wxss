@@ -6,12 +6,13 @@ page{
 .page2{
 	width: 100%;
 	height: 100%;
-	background: url('https://www.korjo.cn/xcx/yellowPageImg/bg.jpg') center center fixed no-repeat;
+	/*background: url('https://www.korjo.cn/xcx/yellowPageImg/bg.jpg') center center fixed no-repeat;*/
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	position: relative;
 }
 .demo{
 	width: 100%;
@@ -97,18 +98,18 @@ page{
 }
 
 .arrow{
-	width: 10%;
+	width: 20rpx;
 	position: absolute;
 	right: 0;
 	top: 50%;
 	transform: translateX(100%) translateY(-50%);
 }
 .arrowed{
-	width: 10%;
+	width: 20rpx;
 	position: absolute;
 	right: 0;
 	top: 50%;
-	transform: rotate(180deg) translateX(100%) translateY(50%);
+	transform: rotate(180deg) translateX(-100%) translateY(50%);
 }
 .btn_add_tel{
 	display: flex;
@@ -205,14 +206,25 @@ page{
 .showTips{
 	width:50rpx;
 	height: 50rpx; 
+	line-height: 50rpx;
 	text-align: center;
 	background-color: #7f0d27;
 	color: #fff;
 	border-radius: 50%;
+	flex-shrink: 0;
 }
 .tips{}
 .scroll_view{
 	width: 100%;
 	height: 90%;
 	flex-grow:  1;
+}
+.textarea{
+	width: 80%;
+	flex-grow:1;
+	text-align: left;
+	height: 4.2rem;
+	word-wrap: break-word;
+	overflow:hidden; 
+	font-size:28rpx;
 }

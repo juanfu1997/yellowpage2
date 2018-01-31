@@ -90,7 +90,7 @@ Page({
     if(e.currentTarget!=undefined){
     ground_index = e.currentTarget.dataset.index
     var userid = that.data.ground_list[ground_index].userid
-    wx.navigateTo({
+    wx.reLaunch({
         url: '/pages/class/class?userid='+userid+'&ground_index='+ground_index
     })
     // that.get_class(userid)
@@ -272,7 +272,14 @@ Page({
     var showTab = that.data.showTab
     var wxpublic_http = that.data.tel_details.wxpublic
     var userid = that.data.userid
-    that.setData({userid:options.userid})
+    var bgimage = that.data.bgimage
+    var store_img = that.data.store_img
+    bgimage = wx.getStorageSync('bgimage')
+    // console.log('bgimage',bgimage)
+    that.setData({
+      userid:options.userid,
+      bgimage
+    })
     console.log('options',options)
 
     that.son_ground(options.typeid,function(res){
@@ -282,6 +289,12 @@ Page({
         tel_index:options.tel_index,
         class_index
       })
+      // var htp='https://www.korjo.cn/KorjoApi/GetDataJsonCommonByBusinessID'
+      // var ty='GET'
+      // var dataJson={business_id:16}
+      // $.req(htp,ty,dataJson,function(res){
+      //   console.log('business_id',res)
+      // })
 
     
 
@@ -290,7 +303,11 @@ Page({
       if(that.data.tel_list){
         // tel_details = get_tel_details
         tel_details = that.data.tel_list[tel_index]
-        that.setData({tel_details})
+        store_img = tel_details.image = JSON.parse(tel_details.image)
+        that.setData({
+          tel_details,
+          store_img
+        })
         console.log('tel_details',tel_details)
 
          
@@ -306,7 +323,7 @@ Page({
 
                   that.setData({param})
                 console.log('wx_json',param)
-              var wx_dataJson = { wxpublic_id:36, datajson:param}
+              var wx_dataJson = { wxpublic_id:36, datajson:param,id:options.typeid}
 
               // $.req(wx_url,'POST',wx_dataJson,function(res){
               //   console.log('wx_json',res,wx_dataJson)
@@ -392,6 +409,17 @@ Page({
 
   
   },
+  onShareAppMessage: function (res) {
+    var that = this
+      return{
+        title:`我向你推荐了${that.data.tel_details.business_name},一起来给他(她)打call吧!`,
+        path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index+'&class_index='+that.data.class_index,
+        imageUrl:'../../images/business.png',
+        success(res){
+          // console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
+        }
+      }
+  },
 
   /**
    * 生命周期函数--监听页面显示
@@ -431,15 +459,5 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function (res) {
-    var that = this
-      return{
-        title:'附近小黄页，电话我知道！',
-        path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index,
-        imageUrl:'../../images/business.png',
-        success(res){
-          console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
-        }
-      }
-  }
+  
 })

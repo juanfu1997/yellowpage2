@@ -1,4 +1,5 @@
 <view class="page2" hidden="">
+	<image style="width: 100%;height: 100%;position: absolute;left: 0;top:0;z-index: -10;" src="{{korjoImg}}{{bgimage}}"></image>
 	<view class="top_title">
 		<view class="add_tel">{{tel_details.business_name}}</view>
 	</view>
@@ -19,7 +20,7 @@
 			<image class="details_img" mode="widthFix" src="{{img}}call.png"></image>
 			<view class="details_text">{{tel_details.customjson}}</view>
 		</view>
-		<view class="btn_details" wx:if="{{!tel_details.wxpublic}}" catchtap="followWechat">
+		<view class="btn_details" wx:if="{{tel_details.wxpublic}}" catchtap="followWechat">
 			<image class="details_img" mode="widthFix" src="{{img}}wechat.png"></image>
 			<button open-type="contact" class="wxpublic details_text" session-from="10">
 			<view class="details_text">{{wechat.name}}</view></button>
