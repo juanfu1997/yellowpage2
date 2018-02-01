@@ -30,7 +30,7 @@ Page({
                         "thumb_url": "http://p.m.fans-me.com/countdownImg/logo.jpg"
                         }
                         },
-    RevSessionCommon:{id:9}
+    sessionId:'',
                         
                             
 
@@ -252,6 +252,32 @@ Page({
           }
         })
   },
+  saveWXpublicLinkMsg(id,cb){
+    var that = this
+    var wx_url = 'https://www.korjo.cn/KorjoApi/SaveDataJsonCommon'
+  
+    console.log('wx_json',param)
+    var param = that.data.param
+    param = JSON.stringify(param)
+
+    that.setData({param})
+    console.log('wx_json',param)
+    var wx_dataJson = { wxpublic_id:36, datajson:param,business_id:id}
+    // console.log('wx_Jsonwx_Json',wx_dataJson)
+    $.req(wx_url,'POST',wx_dataJson,function(res){
+      res.data = JSON.parse(res.data)
+      cb && cb(res)
+      console.log('wx_Jsonwx_Json',res)
+    })
+  },
+  checkBusiness_id(business_id,wxpublic_id,cb){
+    var url = 'https://www.korjo.cn/KorjoApi/GetDataJsonCommonByBusinessID'
+    var type = 'GET'
+    var dataJson = {business_id:business_id,wxpublic_id:wxpublic_id}
+    $.req(url,type,dataJson,function(res){
+      cb && cb(res)
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -303,7 +329,7 @@ Page({
       if(that.data.tel_list){
         // tel_details = get_tel_details
         tel_details = that.data.tel_list[tel_index]
-        store_img = tel_details.image = JSON.parse(tel_details.image)
+        // store_img = tel_details.image = JSON.parse(tel_details.image)
         that.setData({
           tel_details,
           store_img
@@ -315,19 +341,22 @@ Page({
             if(tel_details.wxpublic){
               that.get_wechat(tel_details.wxpublic)
             }
-              var wx_url = 'https://www.korjo.cn/KorjoApi/SaveDataJsonCommon'
-            
-                console.log('wx_json',param)
-              var param = that.data.param
-                  param = JSON.stringify(param)
+              that.checkBusiness_id(tel_details.id,36,function(res){
+                console.log('chaxun',res,tel_details.id)
+                if(!res.data){
+                  that.saveWXpublicLinkMsg(tel_details.id,function(res){
+                    console.log('chaxun',res)
+                    that.setData({
+                      sessionId:res.data
+                    })
+                  })
 
-                  that.setData({param})
-                console.log('wx_json',param)
-              var wx_dataJson = { wxpublic_id:36, datajson:param,id:options.typeid}
-
-              // $.req(wx_url,'POST',wx_dataJson,function(res){
-              //   console.log('wx_json',res,wx_dataJson)
-              // })
+                }else{
+                  that.setData({
+                    sessionId:res.data
+                  })
+                }
+              })
               if(tel_details.intro){
                 $.each(showTab,(i,v) =>{
                   v.show = true

@@ -129,7 +129,11 @@ Page({
         // $.each(list_data.image,(i,v) => {
           
         // })
-        store_img = JSON.stringify(store_img)
+        if(store_img.length){
+          store_img = JSON.stringify(store_img)
+        }else{
+          store_img = ''
+        }
         console.log(store_img)
         list_data.image = store_img
         list_data.video = store_video[0]

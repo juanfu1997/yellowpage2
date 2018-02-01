@@ -22,7 +22,7 @@
 		</view>
 		<view class="btn_details" wx:if="{{tel_details.wxpublic}}" catchtap="followWechat">
 			<image class="details_img" mode="widthFix" src="{{img}}wechat.png"></image>
-			<button open-type="contact" class="wxpublic details_text" session-from="10">
+			<button open-type="contact" class="wxpublic details_text" session-from="{{sessionId}}">
 			<view class="details_text">{{wechat.name}}</view></button>
 		</view>
 		<view class="btn_details" wx:if="{{tel_details.hours}}">

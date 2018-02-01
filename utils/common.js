@@ -241,7 +241,8 @@ function req(url,type,dataJson,cb){
              userid: dataJson.userid ,
              parentid: dataJson.parentid,
              typeid:dataJson.typeid,
-             // business_id:dataJson.business_id
+             business_id:dataJson.business_id,
+             wxpublic_id:dataJson.wxpublic_id,
 
           },
           method:type,
@@ -261,7 +262,8 @@ function req(url,type,dataJson,cb){
 
 
 module.exports = {
-    server: 'https://korjo.fans-me.com/',
+    server: 'https://www.korjo.cn/',
+    data: getApp().globalData,
     get: function (url, data, callback) {
         let server = this.server
         if (url.indexOf('https://') > -1) {
@@ -292,4 +294,5 @@ module.exports = {
     adminUpload,
     take_call,
     req
+    
 }

@@ -3,8 +3,10 @@ App({
   globalData: {
     // img:'http://p.m.fans-me.com/VegaImg/'
     img:'/images/',
+    host: 'https://www.korjo.cn',
     korjoImg:'https://www.korjo.cn',
     media:'https://www.korjo.cn',
+    appid: 36,
     userInfo:null,
   },
   onLaunch: function () {

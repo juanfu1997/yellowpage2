@@ -1,13 +1,13 @@
 {
   "pages":[
+    "pages/faq/faq",
     "pages/index/index",
     "pages/choice_ground/choice_ground",
     "pages/class/class",
     "pages/tel_details/tel_details",
     "pages/add_sell/add_sell",
     "pages/tel_list/tel_list",
-    "pages/test/test",
-    "pages/logs/logs"
+    "pages/test/test"
   ],
   "window":{
     "backgroundTextStyle":"light",
