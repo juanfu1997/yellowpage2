@@ -31,8 +31,8 @@ Page({
                         }
                         },
     sessionId:'',
-                        
-                            
+
+
 
   },
   preview(e){
@@ -75,7 +75,7 @@ Page({
     })
   },
   showGorundList(){
-    var that = this 
+    var that = this
     console.log('11')
     var showGorundList = that.data.showGorundList
 
@@ -95,7 +95,7 @@ Page({
     })
     // that.get_class(userid)
 
-    
+
   }else{
     ground_index = e
     console.log(ground_index)
@@ -185,7 +185,7 @@ Page({
     var tel_dataJson = {typeid:e}
           // var aa =[]
             $.req(tel_url,tel_type,tel_dataJson,function(res){
-              
+
             console.log('dddfff',res,e)
 
               that.setData({tel_list:res.data})
@@ -203,9 +203,9 @@ Page({
       $.req(url,type,dataJson,function(res){
         if(res.data.length!=0){
           that.setData({class:false,class_ground:res.data})
-          
+
           var idArray = []
-          
+
           $.each(that.data.class_ground,(i,v) => {
             idArray.push(v.id)
             console.log('idArray',idArray)
@@ -214,7 +214,7 @@ Page({
           that.son_ground(idArray[0])
           // var tel_dataJson = {typeid:103}
           // for(var i = 0;i<idArray.length;i++){
-          
+
             // console.log('tel_url1111',aa)
           // }
 
@@ -238,7 +238,7 @@ Page({
           url: url, //仅为示例，并非真实的接口地址
           data: {
              wxpublic_id:wxpublic_id,
-             dataJson: dataJson 
+             dataJson: dataJson
           },
           method:type,
           header: {
@@ -255,7 +255,7 @@ Page({
   saveWXpublicLinkMsg(id,cb){
     var that = this
     var wx_url = 'https://www.korjo.cn/KorjoApi/SaveDataJsonCommon'
-  
+
     console.log('wx_json',param)
     var param = that.data.param
     param = JSON.stringify(param)
@@ -282,7 +282,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {    // 参数：分类typeid 选择电话index  
+  onLoad: function (options) {    // 参数：分类typeid 选择电话index
     // var RevSessionCommon={"id": 36,
     //                   "param": {"touser": "",
     //                       "msgtype": "link",
@@ -322,7 +322,7 @@ Page({
       //   console.log('business_id',res)
       // })
 
-    
+
 
 
     // console.log('tel_list',that.data.tel_list)
@@ -336,7 +336,7 @@ Page({
         })
         console.log('tel_details',tel_details)
 
-         
+
 
             if(tel_details.wxpublic){
               that.get_wechat(tel_details.wxpublic)
@@ -357,7 +357,7 @@ Page({
                 }
               })
             }
-              
+
               if(tel_details.intro){
                 $.each(showTab,(i,v) =>{
                   v.show = true
@@ -390,7 +390,7 @@ Page({
 
               // that.setData({showTab})
             // }
-            that.setData({ 
+            that.setData({
               tel_details,showTab,
               typeid:options.typeid,
               ground_index:options.ground_index
@@ -423,9 +423,9 @@ Page({
     })
 
 
-    
 
-    
+
+
 
   console.log('11',options)
   },
@@ -437,14 +437,14 @@ Page({
     var that = this
     that.videoContext = wx.createVideoContext('myVideo')
 
-  
+
   },
   onShareAppMessage: function (res) {
     var that = this
       return{
         title:`我向你推荐了${that.data.tel_details.business_name},一起来给他(她)打call吧!`,
         path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index+'&class_index='+that.data.class_index,
-        imageUrl:'../../images/business.png',
+        imageUrl:`${getApp().globalData.img}business.png`,
         success(res){
           // console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
         }
@@ -455,39 +455,39 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
-  
+
 })

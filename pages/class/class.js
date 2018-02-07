@@ -172,7 +172,7 @@ Page({
       return{
         title:`${that.data.current_ground.name}小黄页，再也不担心记不起附近的商家电话惹。`,
         path:'/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index+'&userid='+that.data.userid+'&ground_index='+that.data.ground_index,
-        imageUrl:'../../images/community.png',
+        imageUrl:`${getApp().globalData.img}community.png`,
         success(res){
           console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
         }

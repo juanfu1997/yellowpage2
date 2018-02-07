@@ -2,7 +2,7 @@
 App({
   globalData: {
     // img:'http://p.m.fans-me.com/VegaImg/'
-    img:'/images/',
+    img:'https://www.korjo.cn/xcx/yellowPageImg/',
     host: 'https://www.korjo.cn',
     korjoImg:'https://www.korjo.cn',
     media:'https://www.korjo.cn',
@@ -70,12 +70,12 @@ App({
         })
 
         }
-        
+
       }
     })
-    
+
 
 
   }
-  
+
 })
