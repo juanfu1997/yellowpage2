@@ -27,19 +27,24 @@ Page({
     ground_list:[],
     showGorundList:true,
     bgimage:''
-  
+
+  },
+  backClass(e){
+    $.goPage(e)
   },
   addStore(e){
     wx.navigateTo({
       url: '/pages/add_sell/add_sell?yellow_pagesid='+this.data.current_ground.id+'&userid='+this.data.current_ground.userid+'&ground_index='+this.data.ground_index
     })
   },
-  showGorundList(){
-    var that = this 
-    var showGorundList = that.data.showGorundList
 
-    that.setData({ showGorundList:!showGorundList })
-  },
+  //切换组建，上线版本删除该功能
+  // showGorundList(){
+  //   var that = this
+  //   var showGorundList = that.data.showGorundList
+  //
+  //   that.setData({ showGorundList:!showGorundList })
+  // },
   go_tel_list(e){
     var that = this
     var parentid = e.currentTarget.dataset.parentid
@@ -72,7 +77,7 @@ Page({
     var current_ground = that.data.current_ground
     var ground_index = that.data.ground_index
     var userid = that.data.userid
-    
+
     if(e.currentTarget!=undefined){
     ground_index = e.currentTarget.dataset.index
     console.log(ground_index)
@@ -146,18 +151,18 @@ Page({
           wx.setStorageSync('bgimage', bgimage)
           // console.log('bgimage',bgimage)
         yellow_pagesid = Number(options.ground_index) +1
-        that.setData({ 
+        that.setData({
           yellow_pagesid,
           userid:options.userid,
           bgimage
         })
       // console.log(options)
       })
-      
+
 
     }
 
-    
+
    },
   onHide: function () {
   this.setData({showGorundList:true})
@@ -172,52 +177,52 @@ Page({
           console.log('res','/pages/tel_details/tel_details?typeid='+that.data.typeid+'&tel_index='+that.data.tel_index)
         }
       }
-  
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
- 
+
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
 
-  
+
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
-  
+
 })

@@ -1,4 +1,5 @@
 // pages/index/index.js
+const $ = require('../../utils/common.js')
 Page({
 
   /**
@@ -15,9 +16,9 @@ Page({
   			]
   
   },
-  // swiperChange(e){
-  // 	console.log(e)
-  // },
+  goFansme(e){
+    $.goPage(e)
+  },
   btn_click(){
   	wx.redirectTo({
 	  url: '/pages/choice_ground/choice_ground'

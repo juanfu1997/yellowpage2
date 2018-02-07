@@ -26,6 +26,7 @@ Page({
                 {class:'class_name'},
                 {class:'class_name'},
     ],
+    choice_son:0,
 
     
 

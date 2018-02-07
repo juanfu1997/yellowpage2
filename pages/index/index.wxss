@@ -44,3 +44,12 @@ page{
 	color: #7f0d27;
 	font-size: 50rpx;
 }
+.fansme{
+  position:absolute;
+  left: 50%;
+  bottom:0%;
+  transform:translateX(-50%);
+  text-decoration: underline;
+  font-size:20rpx;
+  margin-bottom: 30rpx;
+}

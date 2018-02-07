@@ -113,11 +113,21 @@ Page({
     $.req(url,type,null,function(res){
       ground = res.data
       console.log('156',res)
-      // $.each(res.data,(i,v) => {
-      //   ground[i].name = v.name
-      // })
-      // console.log(ground)
-      that.setData({ground})
+      var ground_item
+      $.each(res.data,(i,v) => {
+        // ground[i].name = v.name
+        v.ground_item = parseInt(i / 4)
+
+        console.log(v.ground_item,i)
+      })
+      var ground_num=Math.ceil(ground.length/4)
+        console.log(ground_num)
+      console.log(ground)
+
+      that.setData({
+        ground,
+        ground_num
+      })
       
     })
   },

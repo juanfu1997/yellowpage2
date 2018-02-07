@@ -5,5 +5,5 @@
 		<view class="slogan">随时随地 轻松查询</view>
 	</view>
 	<view class="btn_click" bindtap="btn_click">点击选择</view>
-	<view></view>
+	<view class="fansme" data-page="faq" bindtap="goFansme">粉我吧科技出品</view>
 </view>

@@ -43,7 +43,7 @@
 		</view>
 	</view>
 
-	
+
 	<view class="tab_store" hidden="{{!tab_store}}" >
 		<view class="top_tab"  style="flex-shrink: 0;">
 			<viwe class="{{showTab[0].class}}" data-index="0" wx:if="{{tel_details.intro}}" catchtap="showTab">门店介绍</viwe>
@@ -65,9 +65,9 @@
 		</view>
 		</scroll-view>
 	</view>
-	
 
-	<view class="ground_switch" style="" catchtap="showGorundList">
+
+	<!-- <view class="ground_switch" style="" catchtap="showGorundList">
 		<view class="btn_logo" >
 			<image class="logo" mode="widthFix" src="{{korjoImg}}{{current_ground.logo}}"></image>
 			<image class="switch" mode="widthFix" src="{{img}}ground_switch.png"></image>
@@ -78,10 +78,10 @@
 						<image style="width: 60rpx;" mode="widthFix" src="{{korjoImg}}{{item.logo}}"></image>
 						<view class="ground_name" style=" ">{{item.name}}</view>
 					</view>
-					
+
 		</view>
 
 
-		
-	</view>
+
+	</view> -->
 </view>

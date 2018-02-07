@@ -3,6 +3,7 @@
 .content {
   padding: 20rpx 4% 60rpx 4%;
   font-size: 32rpx;
+  color:#000;
 }
 
 .list{

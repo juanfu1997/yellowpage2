@@ -340,7 +340,6 @@ Page({
 
             if(tel_details.wxpublic){
               that.get_wechat(tel_details.wxpublic)
-            }
               that.checkBusiness_id(tel_details.id,36,function(res){
                 console.log('chaxun',res,tel_details.id)
                 if(!res.data){
@@ -357,6 +356,8 @@ Page({
                   })
                 }
               })
+            }
+              
               if(tel_details.intro){
                 $.each(showTab,(i,v) =>{
                   v.show = true

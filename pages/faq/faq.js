@@ -7,7 +7,6 @@ Page({
 		list: Array(20),
 	},
 	onLoad(options) {
-    return
 		this.GetFansIntro(res => {
 			// 详情
 			const content = $.url2abs(res.content||'')

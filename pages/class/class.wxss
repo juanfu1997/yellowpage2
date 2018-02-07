@@ -17,6 +17,9 @@ page{
 }
 .top_title{
 	background-color: transparent;
+	display:flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 .top_title:after{
 	content: '';
@@ -124,12 +127,12 @@ page{
 	width: 30%;
 }
 .ground_name{
-	
+
 	width: 180rpx;
 	text-align: center;
 	color: #5b5757;
 }
 .btn_ground{
 	display: flex;
-	align-items: center; 
+	align-items: center;
 }
